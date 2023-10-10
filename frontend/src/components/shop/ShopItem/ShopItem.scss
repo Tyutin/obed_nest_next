@@ -1,0 +1,25 @@
+.shop-item {
+  display: flex !important;
+  flex-direction: column;
+  padding: 20px;
+
+  &__image {
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-weight: 500;
+    min-height: 2.2rem;
+    text-align: right;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cart {
+    display: flex;
+    justify-content: space-between;
+  }
+}

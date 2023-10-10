@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  obed_db:
+    container_name: obed_db
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=obed_admin
+      - POSTGRES_PASSWORD=obed_super_password
+    image: postgres:15.4-alpine3.17

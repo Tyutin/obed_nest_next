@@ -1,0 +1,32 @@
+.shop-header {
+  display: flex;
+  flex-direction: column;
+  background-color: aquamarine;
+  padding: 20px;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__company {
+    display: flex;
+    column-gap: 20px;
+  }
+
+  &__company-links {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  &__company-title {
+    font-size: 24px;
+  }
+
+  &__controlls {
+    display: flex;
+    column-gap: 20px;
+  }
+}
