@@ -1,7 +1,7 @@
 import {
   IsBoolean,
+  IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Max,
@@ -13,7 +13,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   title: string;
 
-  @IsNumber()
+  @IsInt()
   @IsNotEmpty()
   @Min(1)
   @Max(10000000)
@@ -27,7 +27,7 @@ export class CreateProductDto {
   @IsOptional()
   description: string;
 
-  @IsNumber()
+  @IsInt()
   @IsNotEmpty()
   @Min(1)
   @Max(100000)
@@ -35,4 +35,8 @@ export class CreateProductDto {
 
   @IsBoolean()
   published: boolean;
+
+  @IsInt()
+  @Min(1)
+  categoryId: number;
 }

@@ -1,8 +1,8 @@
 import {
   IsBoolean,
   IsDate,
+  IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Max,
@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 export class UpdateProductDto {
-  @IsNumber()
+  @IsInt()
   @IsNotEmpty()
   id: number;
 
@@ -18,7 +18,7 @@ export class UpdateProductDto {
   @IsOptional()
   title: string;
 
-  @IsNumber()
+  @IsInt()
   @IsOptional()
   @Min(1)
   @Max(10000000)
@@ -32,7 +32,7 @@ export class UpdateProductDto {
   @IsOptional()
   description: string;
 
-  @IsNumber()
+  @IsInt()
   @IsOptional()
   @Min(1)
   @Max(100000)
@@ -49,4 +49,9 @@ export class UpdateProductDto {
   @IsBoolean()
   @IsOptional()
   published: boolean;
+
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  category: number;
 }

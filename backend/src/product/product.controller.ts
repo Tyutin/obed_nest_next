@@ -38,7 +38,7 @@ export class ProductController {
 
   @Put('/product')
   @UsePipes(new ValidationPipe())
-  async patchProduct(
+  async updateProduct(
     @Body('product') updateProductDto: UpdateProductDto,
   ): Promise<ProductResponseInterface> {
     const product = await this.productService.updateProduct(updateProductDto);

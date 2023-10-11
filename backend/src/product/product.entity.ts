@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CategoryEntity } from '../category/category.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('product')
 export class ProductEntity {
@@ -34,4 +35,7 @@ export class ProductEntity {
 
   @Column({ default: true })
   published: boolean;
+
+  @ManyToOne(() => CategoryEntity, (category) => category.products)
+  category: CategoryEntity;
 }

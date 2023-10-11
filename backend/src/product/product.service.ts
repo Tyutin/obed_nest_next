@@ -11,12 +11,15 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { ProductResponseInterface } from './types/productResponseInterface';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { getSlugs } from 'tools/getSlugs';
+import { CategoryEntity } from 'src/category/category.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    @InjectRepository(CategoryEntity)
+    private readonly categoryRepository: Repository<CategoryEntity>,
   ) {}
 
   async createProduct(
@@ -34,9 +37,22 @@ export class ProductService {
       );
     }
 
+    const category = await this.categoryRepository.findOneBy({
+      id: createProductDto.categoryId,
+    });
+    if (!category) {
+      throw new HttpException(
+        'Ошибка! Выбранная для товара категория не существует',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    product.category = category;
+
     const { slug, slugRu } = getSlugs(product.title);
     product.slug = slug;
     product.slugRu = slugRu;
+
     return await this.productRepository.save(product);
   }
 
