@@ -11,12 +11,15 @@ import { CreateCategoryDto } from './dto/createCategory.dto';
 import { getSlugs } from 'tools/getSlugs';
 import { CategoryResponseInterface } from './types/categoryResponseInterface';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
+import { CityEntity } from 'src/city/city.entity';
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectRepository(CategoryEntity)
     private readonly categoryRepository: Repository<CategoryEntity>,
+    @InjectRepository(CityEntity)
+    private readonly cityRepository: Repository<CityEntity>,
   ) {}
 
   async createCategory(
@@ -25,46 +28,30 @@ export class CategoryService {
     const category = new CategoryEntity();
     Object.assign(category, createCategoryDto);
 
-    const isExistingBySlug = await this.checkIsExistingBySlug(category.title);
+    const isExistingBySlug = await this.checkIsExistingBySlug(
+      category.title,
+      createCategoryDto.cityId,
+    );
     if (isExistingBySlug) {
       throw new HttpException(
         'Ошибка! Категория с таким названием или короткой ссылкой уже существует',
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
+    const city = await this.cityRepository.findOneBy({
+      id: createCategoryDto.cityId,
+    });
+    if (!city) {
+      throw new HttpException(
+        'Ошибка! Выбранный город для категории не сущестувет',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    category.city = city;
     const { slug, slugRu } = getSlugs(category.title);
     category.slug = slug;
     category.slugRu = slugRu;
     return await this.categoryRepository.save(category);
-  }
-
-  async checkIsExistingBySlug(checkingSlug: string): Promise<boolean> {
-    const { slug, slugRu } = getSlugs(checkingSlug);
-    const alreadyExistingBySlug = await this.categoryRepository.findOne({
-      where: [
-        {
-          slug: slug,
-        },
-        {
-          slugRu: slugRu,
-        },
-      ],
-    });
-    return !!alreadyExistingBySlug;
-  }
-
-  async getCategoryBySlug(slug: string): Promise<CategoryEntity> {
-    let category;
-    if (/[a-zA-Z]/.test(slug)) {
-      category = await this.categoryRepository.findOneBy({ slug });
-    } else {
-      category = await this.categoryRepository.findOneBy({ slugRu: slug });
-    }
-
-    if (!category) {
-      throw new NotFoundException();
-    }
-    return category;
   }
 
   async updateCategory(
@@ -74,7 +61,10 @@ export class CategoryService {
       id: updateCategoryDto.id,
     });
     if (!oldCategory) {
-      throw new NotFoundException();
+      throw new HttpException(
+        'Ошибка! Категория не найдена',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
 
     if (
@@ -83,6 +73,7 @@ export class CategoryService {
     ) {
       const isExistingBySlug = await this.checkIsExistingBySlug(
         updateCategoryDto.title,
+        oldCategory.city.id,
       );
       if (isExistingBySlug) {
         throw new HttpException(
@@ -104,6 +95,44 @@ export class CategoryService {
     }
 
     return await this.categoryRepository.save(category);
+  }
+
+  async getCategoryBySlug(slug: string): Promise<CategoryEntity> {
+    let category;
+    if (/[a-zA-Z]/.test(slug)) {
+      category = await this.categoryRepository.findOneBy({ slug });
+    } else {
+      category = await this.categoryRepository.findOneBy({ slugRu: slug });
+    }
+
+    if (!category) {
+      throw new NotFoundException();
+    }
+    return category;
+  }
+
+  async checkIsExistingBySlug(
+    checkingSlug: string,
+    cityId: number,
+  ): Promise<boolean> {
+    const { slug, slugRu } = getSlugs(checkingSlug);
+    const alreadyExistingBySlug = await this.categoryRepository.findOne({
+      where: [
+        {
+          slug,
+          city: {
+            id: cityId,
+          },
+        },
+        {
+          slugRu,
+          city: {
+            id: cityId,
+          },
+        },
+      ],
+    });
+    return !!alreadyExistingBySlug;
   }
 
   buildCategoryResponse(category: CategoryEntity): CategoryResponseInterface {

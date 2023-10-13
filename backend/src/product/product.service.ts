@@ -28,7 +28,10 @@ export class ProductService {
     const product = new ProductEntity();
     Object.assign(product, createProductDto);
 
-    const isExistingBySlug = await this.checkIsExistingBySlug(product.title);
+    const isExistingBySlug = await this.checkIsExistingBySlug(
+      product.title,
+      createProductDto.categoryId,
+    );
 
     if (isExistingBySlug) {
       throw new HttpException(
@@ -69,6 +72,7 @@ export class ProductService {
     if (updateProductDto.title) {
       const isExistingBySlug = await this.checkIsExistingBySlug(
         updateProductDto.title,
+        oldProduct.category.id,
       );
       if (isExistingBySlug && oldProduct.title !== updateProductDto.title) {
         throw new HttpException(
@@ -109,15 +113,24 @@ export class ProductService {
     };
   }
 
-  async checkIsExistingBySlug(checkingSlug: string): Promise<boolean> {
+  async checkIsExistingBySlug(
+    checkingSlug: string,
+    categoryId: number,
+  ): Promise<boolean> {
     const { slug, slugRu } = getSlugs(checkingSlug);
     const alreadyExistingBySlug = await this.productRepository.findOne({
       where: [
         {
-          slug: slug,
+          slug,
+          category: {
+            id: categoryId,
+          },
         },
         {
-          slugRu: slugRu,
+          slugRu,
+          category: {
+            id: categoryId,
+          },
         },
       ],
     });
