@@ -3,7 +3,7 @@ import { DataSourceOptions } from 'typeorm';
 
 const config: DataSourceOptions = {
   type: 'postgres',
-  host: 'obed_db',
+  host: process.env.DB_HOST || 'obed_db',
   port: 5432,
   username: 'obed_admin',
   password: 'NijO9IdBZgKjRvA',

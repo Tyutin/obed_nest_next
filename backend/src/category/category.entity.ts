@@ -13,16 +13,16 @@ export class CategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: 'Город' })
   title: string;
 
   @Column({ default: true })
   published: boolean;
 
-  @Column()
+  @Column({ default: 'gorod' })
   slug: string;
 
-  @Column()
+  @Column({ default: 'город' })
   slugRu: string;
 
   @OneToMany(() => ProductEntity, (product) => product.category, {
