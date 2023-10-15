@@ -22,7 +22,8 @@
       "@shopComponents/*": ["./src/components/shop/*"],
       "@commonComponents/*": ["./src/components/common/*"],
       "@adminComponents/*": ["./src/components/admin/*"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@fetch/*": ["./src/fetch/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

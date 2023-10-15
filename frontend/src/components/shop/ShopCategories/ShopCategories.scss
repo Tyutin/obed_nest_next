@@ -1,0 +1,13 @@
+.shop-categories {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+
+  &__list {
+    display: flex;
+  }
+
+  &__list-item {
+    padding: 20px;
+  }
+}

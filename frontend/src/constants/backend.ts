@@ -1,1 +1,0 @@
-export const BACKEND_API_HOST = process.env.MODE === 'dev' ? 'localhost:3001' : 'http://obedaet.ru/api' 

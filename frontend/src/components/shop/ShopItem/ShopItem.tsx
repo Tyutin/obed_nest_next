@@ -12,7 +12,7 @@ export default function ShopItem(props: ShopItemProps) {
   return (
     <div className="shop-item">
       <Image
-        src={image}
+        src={image || '/images/items/item.png'}
         width={200}
         height={200}
         alt=""
