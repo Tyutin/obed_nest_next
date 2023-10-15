@@ -3,7 +3,15 @@ import './ShopHeader.scss';
 import Image from 'next/image';
 import CartControl from '../CartControl/CartControl';
 import AuthControl from '../AuthControl/AuthControl';
-export default function ShopHeader() {
+import { getCity } from '@fetch/getData';
+
+const getPhoneHref = (phoneString: string): string => {
+  return `+${phoneString.replace(/[^0-9]/g, '')}`;
+};
+
+export default async function ShopHeader() {
+  const city = (await getCity()).city;
+  const { companyName, phones, vkLink, telegramLink, instagramLink } = city;
   return (
     <header className="shop-header">
       <div className="shop-header__top">
@@ -13,15 +21,25 @@ export default function ShopHeader() {
           </Link>
           <div className="shop-header__company-links">
             <Link href={'/'} className="shop-header__company-title">
-              Company Title
+              {companyName}
             </Link>
-            <a href="tel:+73412222222" className="shop-header__company-phone">
-              (3412) 22-22-22
-            </a>
+            <Link href={getPhoneHref(phones[0])}>{phones[0]}</Link>
             <div className="shop-header__company-social">
-              <a href="https://vk.com">
-                <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
-              </a>
+              {vkLink && (
+                <Link href={vkLink}>
+                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
+                </Link>
+              )}
+              {telegramLink && (
+                <Link href={telegramLink}>
+                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
+                </Link>
+              )}
+              {instagramLink && (
+                <Link href={instagramLink}>
+                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -30,6 +48,7 @@ export default function ShopHeader() {
           <AuthControl />
         </div>
       </div>
+      {JSON.stringify(city.phones)}
     </header>
   );
 }

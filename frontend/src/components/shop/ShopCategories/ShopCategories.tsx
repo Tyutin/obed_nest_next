@@ -3,7 +3,7 @@ import './ShopCategories.scss';
 import ShopItem from '@shopComponents/ShopItem/ShopItem';
 
 export default async function ShopCategories() {
-  const categories = (await getCity('glazov')).city.categories;
+  const categories = (await getCity()).city.categories;
 
   return (
     <ul className="shop-categories">

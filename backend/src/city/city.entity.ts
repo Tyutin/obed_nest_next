@@ -40,7 +40,8 @@ export class CityEntity {
   companyName: string;
 
   //Контакты
-  @Column('simple-array', {
+  @Column('text', {
+    array: true,
     default: ['+7 (999) 999-99-99', '+7 (3412) 99 99 99'],
   })
   phones: string[];
@@ -54,7 +55,7 @@ export class CityEntity {
   @Column({ default: 'https://t.me' })
   telegramLink: string;
 
-  @Column({ default: 'https://www.instagram.com/' })
+  @Column({ default: '' })
   instagramLink: string;
   //Контакты
 
