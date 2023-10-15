@@ -1,8 +1,12 @@
 .shop-header {
   display: flex;
   flex-direction: column;
-  background-color: aquamarine;
+  background-color: #fff;
   padding: 20px;
+  row-gap: 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 
   &__top {
     display: flex;
@@ -22,7 +26,18 @@
   }
 
   &__company-title {
-    font-size: 24px;
+    font-size: 26px;
+  }
+
+  &__top-right {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+  }
+
+  &__top-right-links {
+    display: flex;
+    column-gap: 15px;
   }
 
   &__controlls {
@@ -33,5 +48,16 @@
   &__company-social {
     display: flex;
     column-gap: 10px;
+  }
+
+  &__nav-categories {
+    padding: 0 20px;
+  }
+
+  &__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 20px;
   }
 }

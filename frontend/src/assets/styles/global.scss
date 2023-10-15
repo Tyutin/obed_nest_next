@@ -21,6 +21,10 @@ html {
   line-height: inherit;
 }
 
+body {
+  background-color: #fdb195;
+}
+
 h1,
 h2,
 h3,
@@ -35,4 +39,12 @@ img {
 
 ul {
   list-style: none;
+}
+
+a {
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: blueviolet;
 }

@@ -11,44 +11,83 @@ const getPhoneHref = (phoneString: string): string => {
 
 export default async function ShopHeader() {
   const city = (await getCity()).city;
-  const { companyName, phones, vkLink, telegramLink, instagramLink } = city;
+  const {
+    companyName,
+    phones,
+    vkLink,
+    telegramLink,
+    instagramLink,
+    categories,
+  } = city;
+  const links = {
+    vk: (
+      <Link href={vkLink} target="_blank">
+        <Image src={'/images/social/vk.png'} width={30} height={30} alt="" />
+      </Link>
+    ),
+    telegram: (
+      <Link href={telegramLink} target="_blank">
+        <Image src={'/images/social/tg.png'} width={30} height={30} alt="" />
+      </Link>
+    ),
+    inst: (
+      <Link href={instagramLink} target="_blank">
+        <Image src={'/images/social/inst.png'} width={30} height={30} alt="" />
+      </Link>
+    ),
+    logo: (
+      <Link href={'/'} className="shop-header__logo">
+        <Image src={'/images/logo.png'} width={100} height={100} alt="" />
+      </Link>
+    ),
+    companyName: (
+      <Link href={'/'} className="shop-header__company-title">
+        {companyName}
+      </Link>
+    ),
+    phone: <Link href={getPhoneHref(phones[0])}>{phones[0]}</Link>,
+    about: <Link href="/о-компании">О компании</Link>,
+    delivery: <Link href="/условия-доставки">Доставка</Link>,
+    promo: <Link href="/акции">Акции</Link>,
+  };
   return (
     <header className="shop-header">
       <div className="shop-header__top">
         <div className="shop-header__company">
-          <Link href={'/'} className="shop-header__logo">
-            <Image src={'/images/logo.png'} width={100} height={100} alt="" />
-          </Link>
+          {links.logo}
           <div className="shop-header__company-links">
-            <Link href={'/'} className="shop-header__company-title">
-              {companyName}
-            </Link>
-            <Link href={getPhoneHref(phones[0])}>{phones[0]}</Link>
+            {links.companyName}
+            {links.phone}
             <div className="shop-header__company-social">
-              {vkLink && (
-                <Link href={vkLink}>
-                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
-                </Link>
-              )}
-              {telegramLink && (
-                <Link href={telegramLink}>
-                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
-                </Link>
-              )}
-              {instagramLink && (
-                <Link href={instagramLink}>
-                  <Image src={'/images/vk.svg'} width={30} height={30} alt="" />
-                </Link>
-              )}
+              {vkLink && links.vk}
+              {telegramLink && links.telegram}
+              {instagramLink && links.inst}
             </div>
           </div>
         </div>
-        <div className="shop-header__controlls">
-          <CartControl />
-          <AuthControl />
+        <div className="shop-header__top-right">
+          <div className="shop-header__top-right-links">
+            {links.promo}
+            {links.delivery}
+            {links.about}
+          </div>
+          <div className="shop-header__controlls">
+            <CartControl />
+            <AuthControl />
+          </div>
         </div>
       </div>
-      {JSON.stringify(city.phones)}
+      <nav className="shop-header__nav-categories">
+        <ul className="shop-header__categories">
+          {categories.map((category) => {
+            return (
+              <li className="shop-header__categories-item" key={category.id}>
+                <Link href={`/#${category.slugRu}`}>{category.title}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </header>
   );
 }

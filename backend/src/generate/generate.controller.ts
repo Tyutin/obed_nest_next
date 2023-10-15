@@ -21,9 +21,18 @@ export class GenerateController {
   @Post('/seed/:cityName')
   async createAll(@Param('cityName') cityName: string) {
     const city = await this.createCity(cityName);
-    const category = await this.createCategory(city.id);
-    await this.createProduct(category.id, 'Макарошки');
-    await this.createProduct(category.id, 'Пюрешка');
+    const category1 = await this.createCategory(city.id, 'Гарниры');
+    await this.createProduct(category1.id, 'Макарошки');
+    await this.createProduct(category1.id, 'Пюрешка');
+    await this.createProduct(category1.id, 'Гречка');
+    await this.createProduct(category1.id, 'Рагу из овощей');
+    await this.createProduct(category1.id, 'Картофель по деревенски');
+    const category2 = await this.createCategory(city.id, 'Супы');
+    await this.createProduct(category2.id, 'Борщ');
+    await this.createProduct(category2.id, 'Рассольник');
+    await this.createProduct(category2.id, 'Щи');
+    await this.createProduct(category2.id, 'Солянка');
+    await this.createProduct(category2.id, 'Суп лапша с курицей');
     return city;
   }
 
@@ -36,9 +45,9 @@ export class GenerateController {
   }
 
   @Post('/category')
-  async createCategory(cityId?: number) {
+  async createCategory(cityId?: number, categoryName?: string) {
     const category: CreateCategoryDto = {
-      title: 'Вторые блюда',
+      title: categoryName || 'Вторые блюда',
       cityId: cityId || 1,
     };
     const newCategory = this.categoryService.createCategory(category);

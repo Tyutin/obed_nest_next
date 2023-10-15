@@ -5,7 +5,7 @@ import ShopCategories from '@shopComponents/ShopCategories/ShopCategories';
 export default function Home() {
   return (
     <div className="shop-page">
-      <PromotionSlider />
+      {/* <PromotionSlider /> */}
       <ShopCategories />
     </div>
   );

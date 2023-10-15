@@ -1,29 +1,22 @@
-import Carousel from '@commonComponents/Carousel/Carousel';
-import ShopItem from '../ShopItem/ShopItem';
-import './ShopCategory.scss';
-import { ShopCategoryType } from '../../../types/ShopCategory.type';
+import ShopItem from '@shopComponents/ShopItem/ShopItem';
+import { CategoryEntity } from '../../../../../backend/src/category/category.entity';
 
-export default function ShopCategory(props: { category: ShopCategoryType }) {
+import './ShopCategory.scss';
+
+export default function ShopCategory(props: { category: CategoryEntity }) {
   const { category } = props;
-  if (!category.available) {
-    return null;
-  }
-  const { items } = category;
   return (
-    <div className="shop-category">
-      <h2 className="shop-category__title">{category.name}</h2>
-      <Carousel>
-        {items.map((el) => {
+    <div className="shop-category" id={category.slugRu}>
+      <h2 className="shop-category__title">{category.title}</h2>
+      <ul className="shop-category__list">
+        {category.products.map((product) => {
           return (
-            <ShopItem
-              key={el.id}
-              title={el.title}
-              image={el.image}
-              price={el.price}
-            />
+            <li className="shop-category__item" key={product.id}>
+              <ShopItem product={product} />
+            </li>
           );
         })}
-      </Carousel>
+      </ul>
     </div>
   );
 }

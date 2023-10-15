@@ -1,13 +1,22 @@
 .shop-category {
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 
   &__title {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
   }
 
   &__list {
     display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    padding: 10px 20px;
   }
 }
