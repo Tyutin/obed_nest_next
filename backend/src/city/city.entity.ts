@@ -85,8 +85,8 @@ export class CityEntity {
       this.city = 'Городок Н' + Math.ceil(Math.random() * 1000);
     }
     if (!this.slugEn || this.slugRu) {
-      const { slugRu, slug } = getSlugs(this.city);
-      this.slugEn = slug;
+      const { slugRu, slugEn } = getSlugs(this.city);
+      this.slugEn = slugEn;
       this.slugRu = slugRu;
     }
   }

@@ -48,8 +48,8 @@ export class CategoryService {
       );
     }
     category.city = city;
-    const { slug, slugRu } = getSlugs(category.title);
-    category.slug = slug;
+    const { slugEn, slugRu } = getSlugs(category.title);
+    category.slugEn = slugEn;
     category.slugRu = slugRu;
     return await this.categoryRepository.save(category);
   }
@@ -89,8 +89,8 @@ export class CategoryService {
       updateCategoryDto.title &&
       oldCategory.title !== updateCategoryDto.title
     ) {
-      const { slug, slugRu } = getSlugs(category.title);
-      category.slug = slug;
+      const { slugEn, slugRu } = getSlugs(category.title);
+      category.slugEn = slugEn;
       category.slugRu = slugRu;
     }
 
@@ -100,7 +100,7 @@ export class CategoryService {
   async getCategoryBySlug(slug: string): Promise<CategoryEntity> {
     let category;
     if (/[a-zA-Z]/.test(slug)) {
-      category = await this.categoryRepository.findOneBy({ slug });
+      category = await this.categoryRepository.findOneBy({ slugEn: slug });
     } else {
       category = await this.categoryRepository.findOneBy({ slugRu: slug });
     }
@@ -115,11 +115,11 @@ export class CategoryService {
     checkingSlug: string,
     cityId: number,
   ): Promise<boolean> {
-    const { slug, slugRu } = getSlugs(checkingSlug);
+    const { slugEn, slugRu } = getSlugs(checkingSlug);
     const alreadyExistingBySlug = await this.categoryRepository.findOne({
       where: [
         {
-          slug,
+          slugEn,
           city: {
             id: cityId,
           },

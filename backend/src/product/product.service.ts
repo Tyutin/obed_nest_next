@@ -52,8 +52,8 @@ export class ProductService {
 
     product.category = category;
 
-    const { slug, slugRu } = getSlugs(product.title);
-    product.slug = slug;
+    const { slugEn, slugRu } = getSlugs(product.title);
+    product.slugEn = slugEn;
     product.slugRu = slugRu;
 
     return await this.productRepository.save(product);
@@ -85,8 +85,8 @@ export class ProductService {
     const product = new ProductEntity();
     Object.assign(product, oldProduct, updateProductDto);
     if (updateProductDto.title) {
-      const { slug, slugRu } = getSlugs(product.title);
-      product.slug = slug;
+      const { slugEn, slugRu } = getSlugs(product.title);
+      product.slugEn = slugEn;
       product.slugRu = slugRu;
     }
 
@@ -96,7 +96,7 @@ export class ProductService {
   async getProductBySlug(slug: string): Promise<ProductEntity> {
     let product;
     if (/[a-zA-Z]/.test(slug)) {
-      product = await this.productRepository.findOneBy({ slug });
+      product = await this.productRepository.findOneBy({ slugEn: slug });
     } else {
       product = await this.productRepository.findOneBy({ slugRu: slug });
     }
@@ -117,11 +117,11 @@ export class ProductService {
     checkingSlug: string,
     categoryId: number,
   ): Promise<boolean> {
-    const { slug, slugRu } = getSlugs(checkingSlug);
+    const { slugEn, slugRu } = getSlugs(checkingSlug);
     const alreadyExistingBySlug = await this.productRepository.findOne({
       where: [
         {
-          slug,
+          slugEn,
           category: {
             id: categoryId,
           },

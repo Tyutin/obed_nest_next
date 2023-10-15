@@ -20,7 +20,7 @@ export class CategoryEntity {
   published: boolean;
 
   @Column({ default: 'gorod' })
-  slug: string;
+  slugEn: string;
 
   @Column({ default: 'город' })
   slugRu: string;

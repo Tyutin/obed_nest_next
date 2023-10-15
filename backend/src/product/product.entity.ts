@@ -22,7 +22,7 @@ export class ProductEntity {
   weight: number;
 
   @Column()
-  slug: string;
+  slugEn: string;
 
   @Column()
   slugRu: string;
