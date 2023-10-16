@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="shop-layout">
-          <ShopHeader />
+          {/* <ShopHeader /> */}
           <main className="shop-layout__page">{children}</main>
-          <ShopFooter />
+          {/* <ShopFooter /> */}
         </div>
       </body>
     </html>
