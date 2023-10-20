@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import '@assets/styles/global.scss';
 import './ShopLayout.scss';
 import ShopHeader from '@shopComponents/ShopHeader/ShopHeader';
 import ShopFooter from '@shopComponents/ShopFooter/ShopFooter';
+import ScrollToTopButton from '@shopComponents/ScrollToTopButton/ScrollToTopButton';
 
-const inter = Inter({ subsets: ['latin'] });
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,12 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={montserrat.className}>
         <div className="shop-layout">
-          {/* <ShopHeader /> */}
+          <ShopHeader />
           <main className="shop-layout__page">{children}</main>
           {/* <ShopFooter /> */}
         </div>
+        <ScrollToTopButton />
       </body>
     </html>
   );

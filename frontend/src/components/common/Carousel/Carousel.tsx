@@ -10,6 +10,7 @@ function SampleNextArrow(props: any) {
   const { style, onClick, isNext } = props;
   return (
     <Image
+      quality={100}
       width={30}
       height={40}
       src={

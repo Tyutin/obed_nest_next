@@ -29,17 +29,6 @@
     font-size: 26px;
   }
 
-  &__top-right {
-    display: flex;
-    align-items: center;
-    column-gap: 30px;
-  }
-
-  &__top-right-links {
-    display: flex;
-    column-gap: 15px;
-  }
-
   &__controlls {
     display: flex;
     column-gap: 20px;
@@ -50,14 +39,24 @@
     column-gap: 10px;
   }
 
-  &__nav-categories {
-    padding: 0 20px;
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
   }
 
-  &__categories {
+  &__nav-pages {
+    display: flex;
+    gap: 15px;
+    justify-content: right;
+  }
+
+  &__nav-categories {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+    padding: 0 20px;
     font-size: 20px;
+    font-weight: 500;
   }
 }

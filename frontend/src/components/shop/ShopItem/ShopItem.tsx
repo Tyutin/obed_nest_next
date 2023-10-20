@@ -7,6 +7,7 @@ export default function ShopItem(props: { product: ProductEntity }) {
   return (
     <div className="shop-item">
       <Image
+        quality={100}
         src={product.image || '/images/items/item.png'}
         width={200}
         height={200}

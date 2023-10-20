@@ -22,22 +22,46 @@ export default async function ShopHeader() {
   const links = {
     vk: (
       <Link href={vkLink} target="_blank">
-        <Image src={'/images/social/vk.png'} width={30} height={30} alt="" />
+        <Image
+          quality={100}
+          src={'/images/social/vk.png'}
+          width={30}
+          height={30}
+          alt=""
+        />
       </Link>
     ),
     telegram: (
       <Link href={telegramLink} target="_blank">
-        <Image src={'/images/social/tg.png'} width={30} height={30} alt="" />
+        <Image
+          quality={100}
+          src={'/images/social/tg.png'}
+          width={30}
+          height={30}
+          alt=""
+        />
       </Link>
     ),
     inst: (
       <Link href={instagramLink} target="_blank">
-        <Image src={'/images/social/inst.png'} width={30} height={30} alt="" />
+        <Image
+          quality={100}
+          src={'/images/social/inst_30.png'}
+          width={30}
+          height={30}
+          alt=""
+        />
       </Link>
     ),
     logo: (
       <Link href={'/'} className="shop-header__logo">
-        <Image src={'/images/logo.png'} width={100} height={100} alt="" />
+        <Image
+          quality={100}
+          src={'/images/logo.png'}
+          width={100}
+          height={100}
+          alt=""
+        />
       </Link>
     ),
     companyName: (
@@ -65,20 +89,18 @@ export default async function ShopHeader() {
             </div>
           </div>
         </div>
-        <div className="shop-header__top-right">
-          <div className="shop-header__top-right-links">
-            {links.promo}
-            {links.delivery}
-            {links.about}
-          </div>
-          <div className="shop-header__controlls">
-            <CartControl />
-            <AuthControl />
-          </div>
+        <div className="shop-header__controlls">
+          <CartControl />
+          <AuthControl />
         </div>
       </div>
-      <nav className="shop-header__nav-categories">
-        <ul className="shop-header__categories">
+      <nav className="shop-header__nav">
+        <ul className="shop-header__nav-pages">
+          <li className="shop-header__nav-pages-item">{links.promo}</li>
+          <li className="shop-header__nav-pages-item">{links.delivery}</li>
+          <li className="shop-header__nav-pages-item">{links.about}</li>
+        </ul>
+        <ul className="shop-header__nav-categories">
           {categories.map((category) => {
             return (
               <li className="shop-header__categories-item" key={category.id}>
