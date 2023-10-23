@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev:local": "BACKEND_API_HOST=http://localhost:3001 yarn dev",
+    "build": "BACKEND_API_HOST=http://localhost:3001 next build",
+    "start": "BACKEND_API_HOST=http://localhost:3001 next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "react-dom": "^18",
     "react-slick": "^0.29.0",
     "sass": "^1.69.0",
+    "sharp": "^0.32.6",
     "slick-carousel": "^1.8.1",
     "swiper": "^10.3.1"
   },

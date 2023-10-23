@@ -12,9 +12,10 @@ import {
   defaultDeliveryZones,
 } from './types/deliveryZone';
 import { getSlugs } from '../../tools/getSlugs';
+import { CityEntityInterface } from './types/cityEntity.interface';
 
 @Entity('city')
-export class CityEntity {
+export class CityEntity implements CityEntityInterface {
   @PrimaryGeneratedColumn()
   id: number;
 

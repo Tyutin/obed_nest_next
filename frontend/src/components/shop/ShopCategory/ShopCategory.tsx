@@ -1,10 +1,12 @@
 'use client';
-import { CategoryEntity } from '../../../../../backend/src/category/category.entity';
 import ShopProductSwiper from './ShopProductSwiper/ShopProductSwiper';
+import { CategoryEntityInterface } from '../../../../../shared/types/Category/front/CategoryEntity.interface';
 
 import './ShopCategory.scss';
 
-export default function ShopCategory(props: { category: CategoryEntity }) {
+export default function ShopCategory(props: {
+  category: CategoryEntityInterface;
+}) {
   const { category } = props;
   return (
     <div className="shop-category" id={category.slugRu}>

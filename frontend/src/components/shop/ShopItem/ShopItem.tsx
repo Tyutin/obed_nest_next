@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import './ShopItem.scss';
-import { ProductEntity } from '../../../../../backend/src/product/product.entity';
+import { ProductEntityInterface } from '../../../../../shared/types/Product/front/ProductEntity.interface';
 
-export default function ShopItem(props: { product: ProductEntity }) {
+export default function ShopItem(props: { product: ProductEntityInterface }) {
   const { product } = props;
   return (
     <div className="shop-item">

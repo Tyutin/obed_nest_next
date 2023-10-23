@@ -1,14 +1,14 @@
 'use-client';
 import { Swiper, SwiperClass, SwiperProps, SwiperSlide } from 'swiper/react';
-import { ProductEntity } from '../../../../../../backend/src/product/product.entity';
 import ShopItem from '@shopComponents/ShopItem/ShopItem';
 import { useState } from 'react';
 import { Pagination } from 'swiper/modules';
 
 import 'swiper/css/bundle';
 import './ShopProductSwiper.scss';
+import { ProductEntityInterface } from '../../../../../../shared/types/Product/front/ProductEntity.interface';
 
-function SkeletonSwiper(props: { products: ProductEntity[] }) {
+function SkeletonSwiper(props: { products: ProductEntityInterface[] }) {
   const { products } = props;
   return (
     <div className="shop-product-swiper">
@@ -33,7 +33,7 @@ function SkeletonSwiper(props: { products: ProductEntity[] }) {
 }
 
 export default function ShopProductSwiper(props: {
-  products: ProductEntity[];
+  products: ProductEntityInterface[];
 }) {
   const { products } = props;
   const [display, setDisplay] = useState({

@@ -7,9 +7,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CategoryEntityInterface } from './types/categoryEntity.interface';
 
 @Entity('category')
-export class CategoryEntity {
+export class CategoryEntity implements CategoryEntityInterface {
   @PrimaryGeneratedColumn()
   id: number;
 

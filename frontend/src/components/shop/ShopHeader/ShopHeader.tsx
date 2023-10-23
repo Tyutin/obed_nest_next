@@ -4,10 +4,9 @@ import './ShopHeader.scss';
 import Image from 'next/image';
 import CartControl from '../CartControl/CartControl';
 import AuthControl from '../AuthControl/AuthControl';
-import { getCity } from '@fetch/getData';
-import { CityEntity } from '../../../../../backend/src/city/city.entity';
 import { useState } from 'react';
 import cn from 'classnames';
+import { CityEntityInterface } from '../../../../../shared/types/City/front/CityEntity.interface';
 
 const getPhoneHref = (phoneString: string): string => {
   return `+${phoneString.replace(/[^0-9]/g, '')}`;
@@ -61,7 +60,7 @@ const HeaderToggle = (props: { isOpen?: boolean; onClick?: () => void }) => {
 };
 
 interface ShopHeaderProps {
-  city: CityEntity;
+  city: CityEntityInterface;
 }
 
 export default function ShopHeader(props: ShopHeaderProps) {

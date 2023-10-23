@@ -1,8 +1,9 @@
 import { CategoryEntity } from '../category/category.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductEntityInterface } from './types/productEntity.interface';
 
 @Entity('product')
-export class ProductEntity {
+export class ProductEntity implements ProductEntityInterface {
   @PrimaryGeneratedColumn()
   id: number;
 

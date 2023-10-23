@@ -1,13 +1,13 @@
-export interface ProductInterface {
+export interface ProductRawInterface {
   id: number;
   title: string;
   price: number;
   image: string;
   description: string;
   weight: number;
-  slug: string;
+  slugEn: string;
   slugRu: string;
-  published: boolean;
   startAvailableTime: Date;
   endAvailableTime: Date;
+  published: boolean;
 }
