@@ -8,6 +8,7 @@ export const getSlugs = (title: string): { slugEn: string; slugRu: string } => {
     .replace(/[^a-zA-Zа-яА-Я0-9 ]+/g, '')
     .trim()
     .replace(/\s/g, '-')
+    .replaceAll('--', '-')
     .toLowerCase();
   return { slugEn, slugRu };
 };

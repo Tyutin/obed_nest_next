@@ -1,0 +1,32 @@
+.share-button {
+  position: relative;
+
+  &__button {
+    width: 25px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 0;
+    display: block;
+  }
+
+  &__message {
+    font-size: 13px;
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    padding: 5px;
+    background-color: #efefef;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease;
+    cursor: default;
+
+    &_active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

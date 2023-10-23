@@ -203,20 +203,22 @@ export default function ShopHeader(props: ShopHeaderProps) {
           <li className="shop-header__nav-pages-item">{links.about}</li>
         </ul>
         <ul className="shop-header__nav-categories">
-          {categories.map((category) => {
-            return (
-              <li className="shop-header__categories-item" key={category.id}>
-                <Link
-                  onClick={() => {
-                    setMenuIsOpen(false);
-                  }}
-                  href={`/#${category.slugRu}`}
-                >
-                  {category.title}
-                </Link>
-              </li>
-            );
-          })}
+          {categories
+            .filter((cat) => cat.products.length > 0)
+            .map((category) => {
+              return (
+                <li className="shop-header__categories-item" key={category.id}>
+                  <Link
+                    onClick={() => {
+                      setMenuIsOpen(false);
+                    }}
+                    href={`/${category.slugRu}`}
+                  >
+                    {category.title}
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
         <div className="shop-header__company shop-header_visible_mobile">
           <CompanyLogo

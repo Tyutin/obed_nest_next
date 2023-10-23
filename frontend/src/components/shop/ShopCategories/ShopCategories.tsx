@@ -7,13 +7,15 @@ export default async function ShopCategories() {
 
   return (
     <ul className="shop-categories">
-      {categories.map((category) => {
-        return (
-          <li className="shop-categories__item" key={category.id}>
-            <ShopCategory category={category} />
-          </li>
-        );
-      })}
+      {categories
+        .filter((cat) => cat.products.length > 0)
+        .map((category) => {
+          return (
+            <li className="shop-categories__item" key={category.id}>
+              <ShopCategory category={category} />
+            </li>
+          );
+        })}
     </ul>
   );
 }
