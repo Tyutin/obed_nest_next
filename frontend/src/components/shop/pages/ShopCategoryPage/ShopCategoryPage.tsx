@@ -1,20 +1,12 @@
-import { getCity } from '@fetch/getData';
-
-import './ShopCategoryPage.scss';
 import ShopItem from '@shopComponents/ShopItem/ShopItem';
 import ShopShareButton from '@shopComponents/ShopShareButton/ShopShareButton';
+import { CategoryEntityInterface } from '../../../../../../shared/types/Category/front/CategoryEntity.interface';
+import './ShopCategoryPage.scss';
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { slug: string };
+export default async function ShopCategoryPage(props: {
+  category: CategoryEntityInterface;
 }) {
-  const { slug } = params;
-  const decodedSlug = decodeURIComponent(slug);
-  const cityResponse = await getCity();
-  const category = cityResponse.city.categories.find(
-    (cat) => cat.slugEn === decodedSlug || cat.slugRu === decodedSlug
-  );
+  const { category } = props;
   return (
     <div className="category-page">
       <div className="category-page__heading">

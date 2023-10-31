@@ -3,6 +3,7 @@ import './ShopItem.scss';
 import { ProductEntityInterface } from '../../../../../shared/types/Product/front/ProductEntity.interface';
 import Link from 'next/link';
 import { CategoryEntityInterface } from '../../../../../shared/types/Category/front/CategoryEntity.interface';
+import ProductCartControls from '@shopComponents/ProductCartControls/ProductCartControls';
 
 export default function ShopItem(props: {
   product: ProductEntityInterface;
@@ -32,7 +33,7 @@ export default function ShopItem(props: {
       </Link>
       <div className="shop-item__cart-controls">
         <span className="shop-item__cart-price">{product.price} р.</span>
-        <button className="shop-item__cart-add-button">В корзину</button>
+        <ProductCartControls />
       </div>
     </div>
   );

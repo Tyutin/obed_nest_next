@@ -1,6 +1,6 @@
 'use-client';
 import { Swiper, SwiperClass, SwiperProps, SwiperSlide } from 'swiper/react';
-import ShopItem from '@shopComponents/ShopItem/ShopItem';
+// import ShopItem from '@shopComponents/ShopItem/ShopItem';
 import { useState } from 'react';
 import { Pagination } from 'swiper/modules';
 
@@ -20,7 +20,7 @@ function SkeletonSwiper(props: { products: ProductEntityInterface[] }) {
               key={product.id}
             >
               <div className="shop-product-swiper__product-wrapper">
-                <ShopItem product={product} />
+                {/* <ShopItem product={product} /> */}
               </div>
             </div>
           );
@@ -91,7 +91,7 @@ export default function ShopProductSwiper(props: {
           return (
             <SwiperSlide key={product.id}>
               <div className="shop-product-swiper__product-wrapper">
-                <ShopItem product={product} />
+                {/* <ShopItem product={product} /> */}
               </div>
             </SwiperSlide>
           );
