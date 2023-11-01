@@ -145,6 +145,7 @@ export default function ShopHeader(props: ShopHeaderProps) {
     ),
   };
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+
   return (
     <header className="shop-header">
       <div className="shop-header__top">

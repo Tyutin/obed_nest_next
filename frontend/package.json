@@ -12,14 +12,17 @@
   "dependencies": {
     "@types/react-slick": "^0.23.10",
     "classnames": "^2.3.2",
+    "immer": "9.0.21",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.11.0",
     "react-slick": "^0.29.0",
     "sass": "^1.69.0",
     "sharp": "^0.32.6",
     "slick-carousel": "^1.8.1",
-    "swiper": "^10.3.1"
+    "swiper": "^10.3.1",
+    "zustand": "4.1.1"
   },
   "devDependencies": {
     "@types/node": "^20",

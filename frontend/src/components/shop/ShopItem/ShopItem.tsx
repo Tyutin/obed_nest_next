@@ -32,8 +32,8 @@ export default function ShopItem(props: {
         Подробнее
       </Link>
       <div className="shop-item__cart-controls">
-        <span className="shop-item__cart-price">{product.price} р.</span>
-        <ProductCartControls />
+        <span className="shop-item__cart-price">{product.price} ₽</span>
+        <ProductCartControls product={product} />
       </div>
     </div>
   );

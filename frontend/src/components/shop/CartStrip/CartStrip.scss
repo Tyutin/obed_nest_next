@@ -1,0 +1,36 @@
+.cart-strip {
+  position: fixed;
+  bottom: -80px;
+  left: 50vw;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10px;
+  padding: 10px 20px;
+  background-color: #ff7e47;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 2px 4px 9px 5px rgb(57 59 60 / 20%);
+  transition: bottom .3s ease;
+  border: 1px solid #ff6f6f;
+
+  @media (max-width:425px) {
+    column-gap: 7px;
+    padding: 8px 16px;
+    font-size: 17px;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+
+  &_active {
+    bottom: 15px;
+  }
+
+  &__total-price {
+    line-height: 1;
+  }
+}

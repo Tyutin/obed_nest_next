@@ -77,7 +77,7 @@ export default async function ShopProductPage(props: {
             {product.price}₽
           </div>
           <div className="product-page__cart-block">
-            <ProductCartControls />
+            <ProductCartControls product={product} />
           </div>
         </div>
       </div>

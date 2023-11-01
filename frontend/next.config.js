@@ -14,6 +14,10 @@ const nextConfig = {
         source: `/${encodeURIComponent('о-компании')}`,
         destination: `/about`,
       },
+      {
+        source: `/${encodeURIComponent('корзина')}`,
+        destination: `/cart`,
+      },
     ]
   }
 }

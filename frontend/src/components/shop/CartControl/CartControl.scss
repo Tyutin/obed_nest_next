@@ -1,5 +1,27 @@
 .cart-control {
-  width: 50px;
-  height: 50px;
-  background-color: red;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #ff7e47;
+  border-radius: 25px;
+
+  &__counter {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 23px;
+    min-height: 23px;
+    padding: 3px 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #ff7e47;
+    border: 1px solid #ff6f6f;
+    border-radius: 50px;
+  }
 }

@@ -6,6 +6,7 @@ import ShopHeader from '@shopComponents/ShopHeader/ShopHeader';
 import ShopFooter from '@shopComponents/ShopFooter/ShopFooter';
 import ScrollToTopButton from '@shopComponents/ScrollToTopButton/ScrollToTopButton';
 import { getCity } from '@fetch/getData';
+import CartStrip from '@shopComponents/CartStrip/CartStrip';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({
           {/* <ShopFooter /> */}
         </div>
         <ScrollToTopButton />
+        <CartStrip />
       </body>
     </html>
   );
