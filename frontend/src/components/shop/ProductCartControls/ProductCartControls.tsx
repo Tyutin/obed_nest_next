@@ -9,7 +9,7 @@ export default function ProductCartControls(props: {
 }) {
   const { product } = props;
   const addProductToCart = useCartStore((state) => state.addItem);
-  const removeProductFromCart = useCartStore((state) => state.removeItem);
+  const removeProductFromCart = useCartStore((state) => state.decrementItem);
   const productInCart = useStore(useCartStore, (state) =>
     state.items.find((item) => item.id === product.id)
   );

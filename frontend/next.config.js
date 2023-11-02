@@ -18,6 +18,10 @@ const nextConfig = {
         source: `/${encodeURIComponent('корзина')}`,
         destination: `/cart`,
       },
+      {
+        source: `/${encodeURIComponent('оформление-заказа')}`,
+        destination: `/checkout`,
+      },
     ]
   }
 }

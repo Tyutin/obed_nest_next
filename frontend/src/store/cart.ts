@@ -3,7 +3,7 @@ import { ProductEntityInterface } from '../../../shared/types/Product/front/Prod
 import { immer } from 'zustand/middleware/immer'
 import { devtools, persist } from 'zustand/middleware'
 
-interface ProductInCart extends ProductEntityInterface {
+export interface ProductInCart extends ProductEntityInterface {
   count: number
 }
 
@@ -14,6 +14,7 @@ type CartState = {
 
 type CartActions = {
   addItem: (item: ProductEntityInterface) => void
+  decrementItem: (item: ProductEntityInterface) => void
   removeItem: (item: ProductEntityInterface) => void
 }
 
@@ -45,13 +46,25 @@ export const useCartStore = create<CartStore>()(
               state.totalPrice = getNewTotalPrice(state.items)
             }
           ),
-          removeItem: (item: ProductEntityInterface) => set(
+          decrementItem: (item: ProductEntityInterface) => set(
             (state) => {
               const alreadyItemInCart = state.items.find(product => product.id === item.id)
               if (!alreadyItemInCart || !alreadyItemInCart.count) {
                 return
               } else if (alreadyItemInCart && alreadyItemInCart.count && alreadyItemInCart.count > 1) {
                 alreadyItemInCart.count = alreadyItemInCart.count - 1
+              } else if (alreadyItemInCart && alreadyItemInCart.count) {
+                const itemIndex = state.items.indexOf(alreadyItemInCart)
+                state.items.splice(itemIndex, 1)
+              }
+              state.totalPrice = getNewTotalPrice(state.items)
+            }
+          ),
+          removeItem: (item: ProductEntityInterface) => set(
+            (state) => {
+              const alreadyItemInCart = state.items.find(product => product.id === item.id)
+              if (!alreadyItemInCart || !alreadyItemInCart.count) {
+                return
               } else if (alreadyItemInCart && alreadyItemInCart.count) {
                 const itemIndex = state.items.indexOf(alreadyItemInCart)
                 state.items.splice(itemIndex, 1)
