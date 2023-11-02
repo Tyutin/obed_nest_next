@@ -1,4 +1,5 @@
 import { CategoryEntity } from '../category/category.entity';
+import { CityEntity } from '../city/city.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductEntityInterface } from './types/productEntity.interface';
 
@@ -39,4 +40,7 @@ export class ProductEntity implements ProductEntityInterface {
 
   @ManyToOne(() => CategoryEntity, (category) => category.products)
   category: CategoryEntity;
+
+  @ManyToOne(() => CityEntity, (city) => city.products)
+  city: CityEntity;
 }

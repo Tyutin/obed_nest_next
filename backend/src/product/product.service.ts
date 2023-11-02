@@ -52,6 +52,17 @@ export class ProductService {
 
     product.category = category;
 
+    const city = (
+      await this.categoryRepository.findOne({
+        relations: { city: true },
+        where: {
+          id: category.id,
+        },
+      })
+    ).city;
+
+    product.city = city;
+
     const { slugEn, slugRu } = getSlugs(product.title);
     product.slugEn = slugEn;
     product.slugRu = slugRu;

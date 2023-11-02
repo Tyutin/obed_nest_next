@@ -20,10 +20,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs -d dataSource/postgresDataSource.ts",
-    "db:drop": "rm -rf dist & yarn typeorm schema:drop",
-    "db:create": "rm -rf dist & yarn typeorm migration:generate",
-    "db:migrate": "rm -rf dist & yarn typeorm migration:run",
-    "db:seed": "TYPEORM_MODE=seed yarn typeorm-ts-node-commonjs -d src/typeorm/seedDataSource.ts migration:run"
+    "db:drop": "rm -rf dist & DB_HOST=localhost yarn typeorm schema:drop",
+    "db:create": "rm -rf dist & DB_HOST=localhost yarn typeorm migration:generate",
+    "db:migrate": "rm -rf dist & DB_HOST=localhost yarn typeorm migration:run",
+    "db:seed": "TYPEORM_MODE=seed DB_HOST=localhost yarn typeorm-ts-node-commonjs -d src/typeorm/seedDataSource.ts migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
