@@ -9,7 +9,12 @@ import { useCartStore } from '@store/cart/useCartStore';
 import { useProductStore } from '@store/product/useProductStore';
 import { ProductEntityInCart } from '@store/product/types';
 
-const HIDE_COMPONENT_PAGES = ['/корзина', '/cart'];
+const HIDE_COMPONENT_PAGES = [
+  '/корзина',
+  '/cart',
+  '/оформление-заказа',
+  '/checkout',
+];
 
 const shouldBeVisible = (encodedPathname: string): boolean => {
   const pathname = decodeURI(encodedPathname);
