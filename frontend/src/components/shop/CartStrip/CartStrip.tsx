@@ -1,12 +1,13 @@
 'use client';
 import classNames from 'classnames';
-import { useCartStore } from '../../../store/cart';
-import useStore from '../../../store/useStore';
 import { FiShoppingBag } from 'react-icons/fi';
 import './CartStrip.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useCartStore } from '@store/cart/useCartStore';
+import { useProductStore } from '@store/product/useProductStore';
+import { ProductEntityInCart } from '@store/product/types';
 
 const HIDE_COMPONENT_PAGES = ['/корзина', '/cart'];
 
@@ -16,17 +17,22 @@ const shouldBeVisible = (encodedPathname: string): boolean => {
 };
 
 export default function CartStrip() {
-  const totalPrice = useStore(useCartStore, (state) => state.totalPrice);
-  const itemsCount = useStore(useCartStore, (state) =>
-    state.items.reduce((prev, curr) => {
-      return prev + curr.count;
-    }, 0)
-  );
   const pathname = decodeURIComponent(usePathname());
   const [visible, setVisible] = useState(shouldBeVisible(pathname));
   useEffect(() => {
     setVisible(shouldBeVisible(pathname));
   }, [pathname]);
+
+  const items = useCartStore((state) => state.items);
+  const cityProducts = useProductStore((state) => state.products);
+  const itemsToShow = items.map((item) => {
+    const cityProduct = cityProducts.find((product) => product.id === item.id);
+    return { ...cityProduct, count: item.count } as ProductEntityInCart;
+  });
+  const totalPrice = itemsToShow.reduce((acc, curr) => {
+    return acc + curr.count * curr.price;
+  }, 0);
+
   if (!visible) {
     return null;
   }
@@ -34,7 +40,7 @@ export default function CartStrip() {
     <Link
       href={'/корзина'}
       className={classNames('cart-strip', {
-        'cart-strip_active': !!itemsCount && itemsCount > 0,
+        'cart-strip_active': !!items && !!items.length,
       })}
     >
       <FiShoppingBag size={30} color={'white'} />

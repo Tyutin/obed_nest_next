@@ -7,6 +7,9 @@ import ShopFooter from '@shopComponents/ShopFooter/ShopFooter';
 import ScrollToTopButton from '@shopComponents/ScrollToTopButton/ScrollToTopButton';
 import { getCity } from '@fetch/getData';
 import CartStrip from '@shopComponents/CartStrip/CartStrip';
+import { useProductStore } from '@store/product/useProductStore';
+import ZustangState from '@shopComponents/ZustangState/ZustangState';
+import { cookies } from 'next/headers';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -23,6 +26,10 @@ export default async function RootLayout({
   const city = (await getCity()).city;
   return (
     <html lang="en">
+      <ZustangState
+        products={city.products}
+        cartCookie={cookies().get('obed_cart')?.value || ''}
+      />
       <body className={montserrat.className}>
         <div className="shop-layout">
           <ShopHeader city={city} />

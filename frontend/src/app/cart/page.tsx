@@ -1,17 +1,24 @@
 'use client';
 import CartItemProduct from '@shopComponents/CartItem/CartItemProduct';
-import { useCartStore } from '../../store/cart';
-import useStore from '../../store/useStore';
+import { useCartStore } from '@store/cart/useCartStore';
 import './CartPage.scss';
+import { useProductStore } from '@store/product/useProductStore';
+import { ProductEntityInCart } from '@store/product/types';
 
 export default function CartPage() {
-  const items = useStore(useCartStore, (state) => state.items);
+  const items = useCartStore((state) => state.items);
+  const cityProducts = useProductStore((state) => state.products);
+
+  const itemsToShow = items.map((item) => {
+    const cityProduct = cityProducts.find((product) => product.id === item.id);
+    return { ...cityProduct, count: item.count } as ProductEntityInCart;
+  });
   return (
     <div className="cart-page">
       <h1 className="cart-page__title">Корзина</h1>
-      {!!items && items?.length > 0 ? (
+      {!!itemsToShow && itemsToShow?.length > 0 ? (
         <ul className="cart-page__product-list">
-          {items.map((item) => {
+          {itemsToShow.map((item) => {
             return (
               <li className="cart-page__product-item" key={item.id}>
                 <CartItemProduct item={item} />

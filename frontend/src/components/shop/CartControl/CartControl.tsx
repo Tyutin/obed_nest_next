@@ -1,12 +1,11 @@
 'use client';
 import { FiShoppingBag } from 'react-icons/fi';
 import './CartControl.scss';
-import useStore from '../../../store/useStore';
-import { useCartStore } from '../../../store/cart';
+import { useCartStore } from '@store/cart/useCartStore';
 import Link from 'next/link';
 
 export default function CartControl() {
-  const itemsCount = useStore(useCartStore, (state) =>
+  const itemsCount = useCartStore((state) =>
     state.items.reduce((prev, curr) => {
       return prev + curr.count;
     }, 0)

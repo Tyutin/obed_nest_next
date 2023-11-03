@@ -8,57 +8,6 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { CityEntityInterface } from '../../../../../shared/types/City/front/CityEntity.interface';
 
-const getPhoneHref = (phoneString: string): string => {
-  return `+${phoneString.replace(/[^0-9]/g, '')}`;
-};
-
-const CompanyLogo = (props: { className?: string; onClick?: () => void }) => {
-  const { className, onClick } = props;
-  return (
-    <Link
-      onClick={onClick}
-      href={'/'}
-      className={`shop-header__logo ${className}`}
-    >
-      <Image
-        quality={100}
-        src={'/images/logo.png'}
-        width={100}
-        height={100}
-        alt=""
-      />
-    </Link>
-  );
-};
-
-const HeaderToggle = (props: { isOpen?: boolean; onClick?: () => void }) => {
-  const { isOpen, onClick } = props;
-  return (
-    <button
-      className="shop-header__toggle shop-header_visible_mobile"
-      onClick={onClick}
-    >
-      {isOpen ? (
-        <Image
-          src={'/images/svg/toggle-open.svg'}
-          quality={100}
-          width={22}
-          height={18}
-          alt=""
-        />
-      ) : (
-        <Image
-          src={'/images/svg/toggle-close.svg'}
-          quality={100}
-          width={20}
-          height={20}
-          alt=""
-        />
-      )}
-    </button>
-  );
-};
-
 interface ShopHeaderProps {
   city: CityEntityInterface;
 }
@@ -240,3 +189,54 @@ export default function ShopHeader(props: ShopHeaderProps) {
     </header>
   );
 }
+
+const getPhoneHref = (phoneString: string): string => {
+  return `+${phoneString.replace(/[^0-9]/g, '')}`;
+};
+
+const CompanyLogo = (props: { className?: string; onClick?: () => void }) => {
+  const { className, onClick } = props;
+  return (
+    <Link
+      onClick={onClick}
+      href={'/'}
+      className={`shop-header__logo ${className}`}
+    >
+      <Image
+        quality={100}
+        src={'/images/logo.png'}
+        width={100}
+        height={100}
+        alt=""
+      />
+    </Link>
+  );
+};
+
+const HeaderToggle = (props: { isOpen?: boolean; onClick?: () => void }) => {
+  const { isOpen, onClick } = props;
+  return (
+    <button
+      className="shop-header__toggle shop-header_visible_mobile"
+      onClick={onClick}
+    >
+      {isOpen ? (
+        <Image
+          src={'/images/svg/toggle-open.svg'}
+          quality={100}
+          width={22}
+          height={18}
+          alt=""
+        />
+      ) : (
+        <Image
+          src={'/images/svg/toggle-close.svg'}
+          quality={100}
+          width={20}
+          height={20}
+          alt=""
+        />
+      )}
+    </button>
+  );
+};

@@ -1,11 +1,12 @@
 'use client';
 import Image from 'next/image';
 import { FaTrash } from 'react-icons/fa6';
-import { ProductInCart, useCartStore } from '../../../store/cart';
+import { useCartStore } from '@store/cart/useCartStore';
 import ProductCartControls from '@shopComponents/ProductCartControls/ProductCartControls';
 import './CartItemProduct.scss';
+import { ProductEntityInCart } from '@store/product/types';
 
-export default function CartItemProduct(props: { item: ProductInCart }) {
+export default function CartItemProduct(props: { item: ProductEntityInCart }) {
   const { item } = props;
   const removeItem = useCartStore((state) => state.removeItem);
   const totalItemPrice = item.count * item.price;
@@ -34,7 +35,7 @@ export default function CartItemProduct(props: { item: ProductInCart }) {
           <button
             className="cart-item-product__remove-button"
             onClick={() => {
-              removeItem(item);
+              removeItem(item.id);
             }}
           >
             <FaTrash size={'100%'} color={'#9ea2b7'} />

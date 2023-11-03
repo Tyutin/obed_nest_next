@@ -1,8 +1,7 @@
 'use client';
 import './ProductCartControls.scss';
 import { ProductEntityInterface } from '../../../../../shared/types/Product/front/ProductEntity.interface';
-import { useCartStore } from '../../../store/cart';
-import useStore from '../../../store/useStore';
+import { useCartStore } from '@store/cart/useCartStore';
 
 export default function ProductCartControls(props: {
   product: ProductEntityInterface;
@@ -10,7 +9,7 @@ export default function ProductCartControls(props: {
   const { product } = props;
   const addProductToCart = useCartStore((state) => state.addItem);
   const removeProductFromCart = useCartStore((state) => state.decrementItem);
-  const productInCart = useStore(useCartStore, (state) =>
+  const productInCart = useCartStore((state) =>
     state.items.find((item) => item.id === product.id)
   );
   return (
@@ -18,7 +17,7 @@ export default function ProductCartControls(props: {
       {(!productInCart || productInCart?.count === 0) && (
         <button
           className="product-cart-controls__add-to-cart"
-          onClick={() => addProductToCart(product)}
+          onClick={() => addProductToCart(product.id)}
         >
           В Корзину
         </button>
@@ -27,7 +26,7 @@ export default function ProductCartControls(props: {
         <div className="product-cart-controls__counter-block">
           <button
             className="product-cart-controls__counter-button"
-            onClick={() => removeProductFromCart(product)}
+            onClick={() => removeProductFromCart(product.id)}
           >
             -
           </button>
@@ -36,7 +35,7 @@ export default function ProductCartControls(props: {
           </span>
           <button
             className="product-cart-controls__counter-button product-cart-controls__counter-button_add"
-            onClick={() => addProductToCart(product)}
+            onClick={() => addProductToCart(product.id)}
           >
             +
           </button>
