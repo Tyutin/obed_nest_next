@@ -1,0 +1,23 @@
+.cart-products {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+
+    @media (max-width: 425px) {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 8px;
+    }
+  }
+}
+
+.cart-products-empty {
+  display: flex;
+  flex-direction: column;
+}

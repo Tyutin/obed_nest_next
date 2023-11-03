@@ -1,0 +1,14 @@
+.total-cart-price {
+  font-weight: 500;
+  font-size: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  &__price {
+    color: #ff7e47;
+    font-weight: 600;
+    font-size: 22px;
+    margin-left: 5px;
+  }
+
+}

@@ -1,0 +1,18 @@
+.products-toggle-button {
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.products-toggle-button__arrow {
+  transform: rotate(90deg);
+  transition: transform .2s ease;
+
+  .products-toggle-button_active>& {
+    transform: rotate(180deg);
+  }
+}

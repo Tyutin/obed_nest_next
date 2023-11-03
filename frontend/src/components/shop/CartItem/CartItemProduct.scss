@@ -70,8 +70,12 @@
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 767px) {
       width: 100%;
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 425px) {
       gap: 8px;
       justify-content: space-between;
       padding-top: 5px;
@@ -107,9 +111,9 @@
     width: 30px;
     height: 30px;
 
-    @media (max-width: 425px) {
-      width: 20px;
-      height: 20px;
+    @media (max-width: 767px) {
+      width: 22px;
+      height: 22px;
     }
   }
 }
