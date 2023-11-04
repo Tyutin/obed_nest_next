@@ -1,12 +1,14 @@
 'use client';
 import Link from 'next/link';
 import './ShopHeader.scss';
-import Image from 'next/image';
 import CartControl from '../CartControl/CartControl';
 import AuthControl from '../AuthControl/AuthControl';
 import { useState } from 'react';
 import cn from 'classnames';
 import { CityEntityInterface } from '../../../../../shared/types/City/front/CityEntity.interface';
+import { CompanyLogo } from './components/CompanyLogo/CompanyLogo';
+import { getLinks } from './helpers/links';
+import { HeaderToggle } from './components/HeaderToggle/HeaderToggle';
 
 interface ShopHeaderProps {
   city: CityEntityInterface;
@@ -22,78 +24,8 @@ export default function ShopHeader(props: ShopHeaderProps) {
     instagramLink,
     categories,
   } = city;
-  const links = {
-    vk: (
-      <Link href={vkLink} target="_blank">
-        <Image
-          quality={100}
-          src={'/images/social/vk.png'}
-          width={30}
-          height={30}
-          alt=""
-        />
-      </Link>
-    ),
-    telegram: (
-      <Link href={telegramLink} target="_blank">
-        <Image
-          quality={100}
-          src={'/images/social/tg.png'}
-          width={30}
-          height={30}
-          alt=""
-        />
-      </Link>
-    ),
-    inst: (
-      <Link href={instagramLink} target="_blank">
-        <Image
-          quality={100}
-          src={'/images/social/inst_30.png'}
-          width={30}
-          height={30}
-          alt=""
-        />
-      </Link>
-    ),
-    companyName: (
-      <Link href={'/'} className="shop-header__company-title">
-        {companyName}
-      </Link>
-    ),
-    phone: <Link href={`tel:${getPhoneHref(phones[0])}`}>{phones[0]}</Link>,
-    about: (
-      <Link
-        onClick={() => {
-          setMenuIsOpen(false);
-        }}
-        href="/о-компании"
-      >
-        О компании
-      </Link>
-    ),
-    delivery: (
-      <Link
-        onClick={() => {
-          setMenuIsOpen(false);
-        }}
-        href="/условия-доставки"
-      >
-        Доставка
-      </Link>
-    ),
-    promo: (
-      <Link
-        onClick={() => {
-          setMenuIsOpen(false);
-        }}
-        href="/акции"
-      >
-        Акции
-      </Link>
-    ),
-  };
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const links = getLinks(city, () => setMenuIsOpen(false));
 
   return (
     <header className="shop-header">
@@ -189,54 +121,3 @@ export default function ShopHeader(props: ShopHeaderProps) {
     </header>
   );
 }
-
-const getPhoneHref = (phoneString: string): string => {
-  return `+${phoneString.replace(/[^0-9]/g, '')}`;
-};
-
-const CompanyLogo = (props: { className?: string; onClick?: () => void }) => {
-  const { className, onClick } = props;
-  return (
-    <Link
-      onClick={onClick}
-      href={'/'}
-      className={`shop-header__logo ${className}`}
-    >
-      <Image
-        quality={100}
-        src={'/images/logo.png'}
-        width={100}
-        height={100}
-        alt=""
-      />
-    </Link>
-  );
-};
-
-const HeaderToggle = (props: { isOpen?: boolean; onClick?: () => void }) => {
-  const { isOpen, onClick } = props;
-  return (
-    <button
-      className="shop-header__toggle shop-header_visible_mobile"
-      onClick={onClick}
-    >
-      {isOpen ? (
-        <Image
-          src={'/images/svg/toggle-open.svg'}
-          quality={100}
-          width={22}
-          height={18}
-          alt=""
-        />
-      ) : (
-        <Image
-          src={'/images/svg/toggle-close.svg'}
-          quality={100}
-          width={20}
-          height={20}
-          alt=""
-        />
-      )}
-    </button>
-  );
-};
