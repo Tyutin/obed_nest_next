@@ -22,6 +22,10 @@ const nextConfig = {
         source: `/${encodeURIComponent('оформление-заказа')}`,
         destination: `/checkout`,
       },
+      {
+        source: `/${encodeURIComponent('профиль')}`,
+        destination: `/profile`,
+      },
     ]
   }
 }

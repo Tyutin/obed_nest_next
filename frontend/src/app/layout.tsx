@@ -28,7 +28,11 @@ export default async function RootLayout({
 
   const session = await getServerSession();
   return (
-    <SessionProvider session={session}>
+    <SessionProvider
+      session={session}
+      baseUrl="http://localhost:3000"
+      basePath="/api/auth"
+    >
       <html lang="en">
         <ZustangState
           products={city.products}
