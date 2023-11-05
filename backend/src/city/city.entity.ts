@@ -1,5 +1,6 @@
 import { CategoryEntity } from '../category/category.entity';
 import { ProductEntity } from '../product/product.entity';
+import { ProfileEntity } from '../profile/profile.entity';
 import {
   BeforeInsert,
   Column,
@@ -84,6 +85,9 @@ export class CityEntity implements CityEntityInterface {
 
   @OneToMany(() => ProductEntity, (product) => product.city, { eager: true })
   products: ProductEntity[];
+
+  @OneToMany(() => ProfileEntity, (product) => product.city, { eager: true })
+  profiles: ProfileEntity[];
 
   @BeforeInsert()
   setCity() {

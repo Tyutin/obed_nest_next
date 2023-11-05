@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenerateModule } from './generate/generate.module';
 import { CategoryModule } from './category/category.module';
 import { CityModule } from './city/city.module';
+import { ProfileModule } from './profile/profile.module';
 import postgresConfig from '../dataSource/dataSource.config';
 
 @Module({
@@ -15,6 +16,7 @@ import postgresConfig from '../dataSource/dataSource.config';
     GenerateModule,
     CategoryModule,
     CityModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
