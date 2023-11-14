@@ -1,4 +1,4 @@
-import { getCity } from '@fetch/getData';
+import { getCity } from '@fetch/city/getCity';
 import './ShopCategories.scss';
 import ShopCategory from '@shopComponents/ShopCategory/ShopCategory';
 

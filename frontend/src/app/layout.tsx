@@ -5,12 +5,12 @@ import './ShopLayout.scss';
 import ShopHeader from '@shopComponents/ShopHeader/ShopHeader';
 import ShopFooter from '@shopComponents/ShopFooter/ShopFooter';
 import ScrollToTopButton from '@shopComponents/ScrollToTopButton/ScrollToTopButton';
-import { getCity } from '@fetch/getData';
 import CartStrip from '@shopComponents/CartStrip/CartStrip';
 import ZustangState from '@shopComponents/ZustangState/ZustangState';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@commonComponents/SessionProvider/SessionProvider';
+import { getCity } from '@fetch/city/getCity';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -28,26 +28,26 @@ export default async function RootLayout({
 
   const session = await getServerSession();
   return (
-    <SessionProvider
-      session={session}
-      baseUrl="http://localhost:3000"
-      basePath="/api/auth"
-    >
-      <html lang="en">
-        <ZustangState
-          products={city.products}
-          cartCookie={cookies().get('obed_cart')?.value || ''}
-        />
-        <body className={montserrat.className}>
-          <div className="shop-layout">
+    <html lang="en">
+      <ZustangState
+        products={city.products}
+        cartCookie={cookies().get('obed_cart')?.value || ''}
+      />
+      <body className={montserrat.className}>
+        <div className="shop-layout">
+          <SessionProvider
+            session={session}
+            baseUrl="http://localhost:3000"
+            basePath="/api/auth"
+          >
             <ShopHeader city={city} />
-            <main className="shop-layout__page">{children}</main>
-            {/* <ShopFooter /> */}
-          </div>
-          <ScrollToTopButton />
-          <CartStrip />
-        </body>
-      </html>
-    </SessionProvider>
+          </SessionProvider>
+          <main className="shop-layout__page">{children}</main>
+          {/* <ShopFooter /> */}
+        </div>
+        <ScrollToTopButton />
+        <CartStrip />
+      </body>
+    </html>
   );
 }

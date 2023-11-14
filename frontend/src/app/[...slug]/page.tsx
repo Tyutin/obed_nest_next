@@ -1,5 +1,4 @@
-import { getCity } from '@fetch/getData';
-
+import { getCity } from '@fetch/city/getCity';
 import ShopCategoryPage from '@shopComponents/pages/ShopCategoryPage/ShopCategoryPage';
 import ShopProductPage from '@shopComponents/pages/ShopProductPage/ShopProductPage';
 import { redirect } from 'next/navigation';

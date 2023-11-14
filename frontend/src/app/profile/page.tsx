@@ -1,14 +1,13 @@
-'use client';
-import { signOut, useSession } from 'next-auth/react';
-
+import { getServerSession } from 'next-auth';
 import './ProfilePage.scss';
+import SignOutButton from './SignOutButton/SignOutButton';
 
-export default function ProfilePage() {
-  const { data: session } = useSession();
+export default async function ProfilePage() {
+  const session = await getServerSession();
   return (
     <div className="profile-page">
       <h1 className="profile-page__title">Личный кабинет</h1>
-      <button onClick={() => signOut()}>Exit</button>
+      <SignOutButton />
       <pre>{JSON.stringify(session, null, 2)}</pre>
     </div>
   );

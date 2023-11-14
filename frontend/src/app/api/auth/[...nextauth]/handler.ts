@@ -1,3 +1,5 @@
+import { createProfile } from '@fetch/profile';
+import { getProfile } from '@fetch/profile';
 import { AuthOptions, User } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import  VkProvider, {VkProfile}  from 'next-auth/providers/vk';
@@ -15,7 +17,7 @@ export const authOptions: AuthOptions = {
       profile: (result: VkProfile) => {
         const profile = result.response?.[0] ?? {}
         return {
-          id: profile.id.toString(),
+          id: profile.id,
           firstName: profile.first_name,
           lastName: profile.last_name,
           name: 'bad name',
@@ -23,13 +25,21 @@ export const authOptions: AuthOptions = {
           image: profile.photo_100,
         } as User
       },
+      httpOptions: {
+        timeout: 10000
+      }
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
+      const profileResponse = await getProfile(Number(user.id))
+      const { profile } = profileResponse
+      if(!profile) {
+        await createProfile(Number(user.id), user.firstName || '', user.lastName || '')
+      }
       return true
     },
-    async session({ session, token, user }) {
+    async session({ session }) {
       
       return session
     }
