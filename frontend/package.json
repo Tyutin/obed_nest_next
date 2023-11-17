@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@auth/typeorm-adapter": "^1.0.7",
-    "@next-auth/typeorm-legacy-adapter": "^2.0.2",
     "@types/js-cookie": "^3.0.5",
     "@types/react-slick": "^0.23.10",
     "classnames": "^2.3.2",
@@ -26,7 +25,6 @@
     "react-slick": "^0.29.0",
     "sass": "^1.69.0",
     "sharp": "^0.32.6",
-    "slick-carousel": "^1.8.1",
     "swiper": "^10.3.1",
     "typeorm": "^0.3.17",
     "zustand": "4.1.1"
