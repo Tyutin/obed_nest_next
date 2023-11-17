@@ -11,6 +11,7 @@ import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@commonComponents/SessionProvider/SessionProvider';
 import { getCity } from '@fetch/city/getCity';
+import { authOptions } from './api/auth/[...nextauth]/handler';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -26,7 +27,7 @@ export default async function RootLayout({
 }) {
   const city = (await getCity()).city;
 
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <ZustangState

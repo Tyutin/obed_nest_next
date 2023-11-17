@@ -25,7 +25,10 @@
       "@assets/*": ["./src/assets/*"],
       "@fetch/*": ["./src/fetch/*"],
       "@store/*": ["./src/store/*"]
-    }
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.ts"],
   "exclude": ["node_modules"]
