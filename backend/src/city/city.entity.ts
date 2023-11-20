@@ -7,6 +7,7 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 import { WorkHoursInterface, defaultWorkHours } from './types/workHours';
 import {
@@ -81,13 +82,13 @@ export class CityEntity implements CityEntityInterface {
   shippingZoneMapLink: string;
 
   @OneToMany(() => CategoryEntity, (category) => category.city, { eager: true })
-  categories: CategoryEntity[];
+  categories: Relation<CategoryEntity>[];
 
   @OneToMany(() => ProductEntity, (product) => product.city, { eager: true })
-  products: ProductEntity[];
+  products: Relation<ProductEntity>[];
 
   @OneToMany(() => ProfileEntity, (product) => product.city, { eager: true })
-  profiles: ProfileEntity[];
+  profiles: Relation<ProfileEntity>[];
 
   @BeforeInsert()
   setCity() {

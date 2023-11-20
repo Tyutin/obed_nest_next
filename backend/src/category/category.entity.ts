@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 import { CategoryEntityInterface } from './types/categoryEntity.interface';
 
@@ -29,8 +30,8 @@ export class CategoryEntity implements CategoryEntityInterface {
   @OneToMany(() => ProductEntity, (product) => product.category, {
     eager: true,
   })
-  products: ProductEntity[];
+  products: Relation<ProductEntity>[];
 
   @ManyToOne(() => CityEntity, (city) => city.categories)
-  city: CityEntity;
+  city: Relation<CityEntity>;
 }

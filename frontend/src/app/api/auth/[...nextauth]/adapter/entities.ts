@@ -5,9 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   ValueTransformer,
-} from 'typeorm';
-import type { Relation } from 'typeorm';
-// import { ProfileEntity } from '../profile/profile.entity';
+} from 'typeorm'
 
 const transformer: Record<'date' | 'bigint', ValueTransformer> = {
   date: {
@@ -18,127 +16,109 @@ const transformer: Record<'date' | 'bigint', ValueTransformer> = {
     from: (bigInt: string | null) => bigInt && parseInt(bigInt, 10),
     to: (bigInt?: number) => bigInt?.toString(),
   },
-};
+}
 
 @Entity('UserEntity', { name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
   @Column({ type: 'varchar', nullable: true })
-  name!: string | null;
-
-  @Column({ type: 'varchar', nullable: true })
-  firstName!: string | null;
-
-  @Column({ type: 'varchar', nullable: true })
-  lastName!: string | null;
+  name!: string | null
 
   @Column({ type: 'varchar', nullable: true, unique: true })
-  email!: string | null;
+  email!: string | null
 
   @Column({ type: 'varchar', nullable: true, transformer: transformer.date })
-  emailVerified!: string | null;
+  emailVerified!: string | null
 
   @Column({ type: 'varchar', nullable: true })
-  phone!: string | null;
+  image!: string | null
 
-  @Column({ type: 'varchar', nullable: true })
-  image!: string | null;
+  @OneToMany<SessionEntity>('SessionEntity', (session) => session.userId)
+  sessions!: SessionEntity[]
 
-  @OneToMany(() => SessionEntity, (session) => session.userId)
-  sessions!: Relation<SessionEntity>[];
-
-  @OneToMany(() => AccountEntity, (account) => account.userId)
-  accounts!: Relation<AccountEntity>[];
-
-  // @OneToMany(() => ProfileEntity, (profile) => profile.userId)
-  // profiles: Relation<ProfileEntity>[];
+  @OneToMany<AccountEntity>('AccountEntity', (account) => account.userId)
+  accounts!: AccountEntity[]
 }
 
 @Entity('AccountEntity', { name: 'accounts' })
 export class AccountEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
   @Column({ type: 'uuid' })
-  userId!: string;
+  userId!: string
 
   @Column()
-  type!: string;
+  type!: string
 
   @Column()
-  provider!: string;
+  provider!: string
 
   @Column()
-  providerAccountId!: string;
+  providerAccountId!: string
 
   @Column({ type: 'varchar', nullable: true })
-  refresh_token!: string | null;
+  refresh_token!: string | null
 
   @Column({ type: 'varchar', nullable: true })
-  access_token!: string | null;
+  access_token!: string | null
 
   @Column({
     nullable: true,
     type: 'bigint',
     transformer: transformer.bigint,
   })
-  expires_at!: number | null;
+  expires_at!: number | null
 
   @Column({ type: 'varchar', nullable: true })
-  token_type!: string | null;
+  token_type!: string | null
 
   @Column({ type: 'varchar', nullable: true })
-  scope!: string | null;
+  scope!: string | null
 
   @Column({ type: 'varchar', nullable: true })
-  id_token!: string | null;
+  id_token!: string | null
 
   @Column({ type: 'varchar', nullable: true })
-  session_state!: string | null;
+  session_state!: string | null
 
-  @Column({ type: 'varchar', nullable: true })
-  oauth_token_secret!: string | null;
-
-  @Column({ type: 'varchar', nullable: true })
-  oauth_token!: string | null;
-
-  @ManyToOne(() => UserEntity, (user) => user.accounts, {
+  @ManyToOne<UserEntity>('UserEntity', (user) => user.accounts, {
     createForeignKeyConstraints: true,
   })
-  user!: Relation<UserEntity>;
+  user!: UserEntity
 }
 
 @Entity('SessionEntity', { name: 'sessions' })
 export class SessionEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
   @Column({ unique: true })
-  sessionToken!: string;
+  sessionToken!: string
 
   @Column({ type: 'uuid' })
-  userId!: string;
+  userId!: string
 
   @Column({ transformer: transformer.date })
-  expires!: string;
+  expires!: string
 
-  @ManyToOne(() => UserEntity, (user) => user.sessions)
-  user!: Relation<UserEntity>;
+  @ManyToOne<UserEntity>('UserEntity', (user) => user.sessions)
+  user!: UserEntity
 }
 
 @Entity('VerificationTokenEntity', { name: 'verification_tokens' })
 export class VerificationTokenEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
   @Column()
-  token!: string;
+  token!: string
 
   @Column()
-  identifier!: string;
+  identifier!: string
 
   @Column({ transformer: transformer.date })
-  expires!: string;
+  expires!: string
 }

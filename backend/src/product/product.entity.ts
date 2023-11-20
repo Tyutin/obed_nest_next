@@ -1,6 +1,12 @@
 import { CategoryEntity } from '../category/category.entity';
 import { CityEntity } from '../city/city.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+} from 'typeorm';
 import { ProductEntityInterface } from './types/productEntity.interface';
 
 @Entity('product')
@@ -39,8 +45,8 @@ export class ProductEntity implements ProductEntityInterface {
   published: boolean;
 
   @ManyToOne(() => CategoryEntity, (category) => category.products)
-  category: CategoryEntity;
+  category: Relation<CategoryEntity>;
 
   @ManyToOne(() => CityEntity, (city) => city.products)
-  city: CityEntity;
+  city: Relation<CityEntity>;
 }
