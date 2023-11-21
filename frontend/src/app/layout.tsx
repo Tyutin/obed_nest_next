@@ -36,11 +36,7 @@ export default async function RootLayout({
       />
       <body className={montserrat.className}>
         <div className="shop-layout">
-          <SessionProvider
-            session={session}
-            baseUrl="http://localhost:3000"
-            basePath="/api/auth"
-          >
+          <SessionProvider session={session}>
             <ShopHeader city={city} />
           </SessionProvider>
           <main className="shop-layout__page">{children}</main>
