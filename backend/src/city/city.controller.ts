@@ -14,6 +14,7 @@ import { CreateCityDto } from './dto/createCity.dto';
 import { CityResponseInterface } from './types/cityResponse.interface';
 import { UpdateCityDto } from './dto/updateCity.dto';
 import { AuthSecretGuard } from '../next-auth/guards/authSecret.guard';
+import { AdminOrSecretGuard } from 'src/next-auth/guards/adminOrSecret.guard';
 
 @Controller()
 export class CityController {
@@ -33,6 +34,7 @@ export class CityController {
 
   @Put('/city')
   @UsePipes(new ValidationPipe())
+  @UseGuards(AdminOrSecretGuard)
   async updateCity(
     @Body('city') updateCityLocalDto: UpdateCityDto,
   ): Promise<CityResponseInterface> {

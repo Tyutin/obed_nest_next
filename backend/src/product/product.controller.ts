@@ -7,11 +7,13 @@ import {
   Get,
   Param,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductResponseInterface } from './types/productResponseInterface';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
+import { AdminOrSecretGuard } from 'src/next-auth/guards/adminOrSecret.guard';
 
 @Controller()
 export class ProductController {
@@ -21,6 +23,7 @@ export class ProductController {
 
   @Post('/product')
   @UsePipes(new ValidationPipe())
+  @UseGuards(AdminOrSecretGuard)
   async createProduct(
     @Body('product') createProductDto: CreateProductDto,
   ): Promise<ProductResponseInterface> {
@@ -38,6 +41,7 @@ export class ProductController {
 
   @Put('/product')
   @UsePipes(new ValidationPipe())
+  @UseGuards(AdminOrSecretGuard)
   async updateProduct(
     @Body('product') updateProductDto: UpdateProductDto,
   ): Promise<ProductResponseInterface> {
