@@ -61,7 +61,7 @@ export class UserEntity {
   @OneToMany(() => ProfileEntity, (profile) => profile.userId)
   profiles: Relation<ProfileEntity>[];
 
-  @ManyToMany(() => CityEntity)
+  @ManyToMany(() => CityEntity, { eager: true })
   @JoinTable()
   adminForCities: Relation<CityEntity>[];
 }

@@ -42,7 +42,7 @@ export class CityController {
 
   @Get('/city/:slug')
   async getCity(@Param('slug') slug: string): Promise<CityResponseInterface> {
-    const category = await this.cityService.getCityBySlug(slug);
-    return this.cityService.buildCityResponse(category);
+    const city = await this.cityService.getCityBySlug(slug);
+    return this.cityService.buildCityResponse(city);
   }
 }

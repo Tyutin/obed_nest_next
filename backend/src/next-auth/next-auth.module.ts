@@ -9,10 +9,12 @@ import {
   VerificationTokenEntity,
 } from './nextAuth.entity';
 import { ProfileEntity } from 'src/profile/profile.entity';
+import { CityService } from 'src/city/city.service';
+import { CityEntity } from 'src/city/city.entity';
 
 @Module({
   controllers: [NextAuthController],
-  providers: [NextAuthService],
+  providers: [NextAuthService, CityService],
   imports: [
     TypeOrmModule.forFeature([
       UserEntity,
@@ -20,6 +22,7 @@ import { ProfileEntity } from 'src/profile/profile.entity';
       SessionEntity,
       VerificationTokenEntity,
       ProfileEntity,
+      CityEntity,
     ]),
   ],
   exports: [NextAuthService],
