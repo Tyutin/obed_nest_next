@@ -1,5 +1,5 @@
 import type { DataSource, DataSourceOptions } from 'typeorm'
-import * as defaultEntities from './entities'
+import {defaultEntities} from './entities'
 
 /** Ensure configOrString is normalized to an object. */
 export function parseDataSourceConfig(

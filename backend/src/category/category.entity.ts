@@ -6,8 +6,8 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Relation,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { CategoryEntityInterface } from './types/categoryEntity.interface';
 
 @Entity('category')

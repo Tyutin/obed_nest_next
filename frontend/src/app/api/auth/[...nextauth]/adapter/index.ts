@@ -4,22 +4,13 @@ import type {
   AdapterUser,
   AdapterAccount,
   AdapterSession,
-} from 'next-auth/adapters'
+} from './types/adapterTypes'
 import { DataSourceOptions, DataSource, EntityManager } from 'typeorm'
-import * as defaultEntities from './entities'
+import {defaultEntities} from './entities'
 import { parseDataSourceConfig, updateConnectionEntities } from './utils'
 
 export const entities = defaultEntities
-
 export type Entities = typeof entities
-
-/** This is the interface for the TypeORM adapter options. */
-export interface TypeORMAdapterOptions {
-  /**
-   * The {@link https://orkhan.gitbook.io/typeorm/docs/entities TypeORM entities} to create the database tables from.
-   */
-  entities?: Entities
-}
 
 let _dataSource: DataSource | undefined
 
@@ -49,19 +40,22 @@ export async function getManager(options: {
 }
 
 export function TypeORMAdapter(
-  dataSource: string | DataSourceOptions,
-  options?: TypeORMAdapterOptions
+  dataSource: string | DataSourceOptions
 ): Adapter {
-  const entities = options?.entities
-  const c = {
+  const c: {
+    dataSource: string | DataSourceOptions
+    entities: Entities
+  } = {
     dataSource,
     entities: {
-      UserEntity: entities?.UserEntity ?? defaultEntities.UserEntity,
-      SessionEntity: entities?.SessionEntity ?? defaultEntities.SessionEntity,
-      AccountEntity: entities?.AccountEntity ?? defaultEntities.AccountEntity,
-      VerificationTokenEntity:
-        entities?.VerificationTokenEntity ??
-        defaultEntities.VerificationTokenEntity,
+      UserEntity: defaultEntities.UserEntity,
+      SessionEntity: defaultEntities.SessionEntity,
+      AccountEntity: defaultEntities.AccountEntity,
+      VerificationTokenEntity: defaultEntities.VerificationTokenEntity,
+      ProfileEntity: defaultEntities.ProfileEntity,
+      CityEntity: defaultEntities.CityEntity,
+      CategoryEntity: defaultEntities.CategoryEntity,
+      ProductEntity: defaultEntities.ProductEntity
     },
   }
 
@@ -172,7 +166,7 @@ export function TypeORMAdapter(
     },
 
 
-    // НУЖНЫ ДЛЯ АВТОРИЗАЦИИ ПО EMAIL
+    // // НУЖНЫ ДЛЯ АВТОРИЗАЦИИ ПО EMAIL
     // async createVerificationToken(data) {
     //   const m = await getManager(c)
     //   const verificationToken = await m.save('VerificationTokenEntity', data)
@@ -195,7 +189,7 @@ export function TypeORMAdapter(
     //   return verificationToken
     // },
 
-    // СОВСЕМ ПОКА НЕНУЖНЫЕ
+    // // СОВСЕМ ПОКА НЕНУЖНЫЕ
     // /**
     //  * Method used in testing. You won't need to call this in your app.
     //  * @internal

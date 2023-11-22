@@ -23,4 +23,19 @@ export class NextAuthService {
     @InjectRepository(ProfileEntity)
     private readonly profileRepository: Repository<ProfileEntity>,
   ) {}
+
+  async getUserBySessionToken(token: string): Promise<UserEntity | null> {
+    const session = await this.sessionRepository.findOne({
+      where: {
+        sessionToken: token,
+      },
+      relations: {
+        user: true,
+      },
+    });
+    if (!session || !session.user) {
+      return null;
+    }
+    return session.user;
+  }
 }

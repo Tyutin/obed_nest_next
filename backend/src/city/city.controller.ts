@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { CityService } from './city.service';
 import { CreateCityDto } from './dto/createCity.dto';
 import { CityResponseInterface } from './types/cityResponse.interface';
 import { UpdateCityDto } from './dto/updateCity.dto';
+import { AuthSecretGuard } from '../next-auth/guards/authSecret.guard';
 
 @Controller()
 export class CityController {
@@ -20,6 +22,7 @@ export class CityController {
   }
 
   @Post('/city')
+  @UseGuards(AuthSecretGuard)
   @UsePipes(new ValidationPipe())
   async createCity(
     @Body('city') createCityDto: CreateCityDto,
@@ -38,9 +41,7 @@ export class CityController {
   }
 
   @Get('/city/:slug')
-  async getCategory(
-    @Param('slug') slug: string,
-  ): Promise<CityResponseInterface> {
+  async getCity(@Param('slug') slug: string): Promise<CityResponseInterface> {
     const category = await this.cityService.getCityBySlug(slug);
     return this.cityService.buildCityResponse(category);
   }

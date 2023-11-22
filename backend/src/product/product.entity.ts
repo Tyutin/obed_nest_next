@@ -1,12 +1,7 @@
 import { CategoryEntity } from '../category/category.entity';
 import { CityEntity } from '../city/city.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { ProductEntityInterface } from './types/productEntity.interface';
 
 @Entity('product')

@@ -1,4 +1,4 @@
-import { getCity } from '@fetch/city/getCity';
+import { fetchData } from '@fetch/fetchData';
 import ShopCategoryPage from '@shopComponents/pages/ShopCategoryPage/ShopCategoryPage';
 import ShopProductPage from '@shopComponents/pages/ShopProductPage/ShopProductPage';
 import { redirect } from 'next/navigation';
@@ -15,7 +15,11 @@ export default async function CategoryPage({
   }
 
   const categorySlug = decodeURIComponent(slug[0]);
-  const cityResponse = await getCity();
+  const cityResponse = await fetchData.city.getCurrent();
+  if (!cityResponse) {
+    redirect('http://demo.obedaet-test.ru');
+  }
+
   const category = cityResponse.city.categories.find(
     (cat) => cat.slugEn === categorySlug || cat.slugRu === categorySlug
   );

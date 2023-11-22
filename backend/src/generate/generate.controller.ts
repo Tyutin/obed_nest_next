@@ -1,10 +1,11 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Param, Post, UseGuards } from '@nestjs/common';
 import { ProductService } from 'src/product/product.service';
 import { CreateProductDto } from 'src/product/dto/createProduct.dto';
 import { CategoryService } from 'src/category/category.service';
 import { CreateCategoryDto } from 'src/category/dto/createCategory.dto';
 import { CreateCityDto } from 'src/city/dto/createCity.dto';
 import { CityService } from 'src/city/city.service';
+import { AuthSecretGuard } from 'src/next-auth/guards/authSecret.guard';
 
 @Controller('generate')
 export class GenerateController {
@@ -19,6 +20,7 @@ export class GenerateController {
   }
 
   @Post('/seed/:cityName')
+  @UseGuards(AuthSecretGuard)
   async createAll(@Param('cityName') cityName: string) {
     const city = await this.createCity(cityName);
     const category1 = await this.createCategory(city.id, 'Гарниры');
@@ -37,6 +39,7 @@ export class GenerateController {
   }
 
   @Post('/city')
+  @UseGuards(AuthSecretGuard)
   async createCity(cityName?: string) {
     const newCity = this.cityService.createCity(
       cityName ? ({ city: cityName } as CreateCityDto) : ({} as CreateCityDto),
@@ -45,6 +48,7 @@ export class GenerateController {
   }
 
   @Post('/category')
+  @UseGuards(AuthSecretGuard)
   async createCategory(cityId?: number, categoryName?: string) {
     const category: CreateCategoryDto = {
       title: categoryName || 'Вторые блюда',
@@ -55,6 +59,7 @@ export class GenerateController {
   }
 
   @Post('/product')
+  @UseGuards(AuthSecretGuard)
   async createProduct(categoryId?: number, title?: string) {
     const product: CreateProductDto = {
       title: title || 'Макароны',

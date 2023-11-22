@@ -10,8 +10,9 @@ import ZustangState from '@shopComponents/ZustangState/ZustangState';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@commonComponents/SessionProvider/SessionProvider';
-import { getCity } from '@fetch/city/getCity';
 import { authOptions } from './api/auth/[...nextauth]/handler';
+import { redirect } from 'next/navigation';
+import { fetchData } from '@fetch/fetchData';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -25,7 +26,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const city = (await getCity()).city;
+  const cityResponse = await fetchData.city.getCurrent();
+  if (!cityResponse) {
+    redirect('http://demo.obedaet-test.ru');
+  }
+  const city = cityResponse.city;
 
   const session = await getServerSession(authOptions);
   return (

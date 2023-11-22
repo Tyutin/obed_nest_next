@@ -5,9 +5,12 @@ import {
   ManyToOne,
   OneToMany,
   ValueTransformer,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-// import { ProfileEntity } from '../profile/profile.entity';
+import { ProfileEntity } from '../profile/profile.entity';
+import { CityEntity } from '../city/city.entity';
 
 const transformer: Record<'date' | 'bigint', ValueTransformer> = {
   date: {
@@ -43,6 +46,9 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true })
   phone!: string | null;
 
+  @Column({ type: 'varchar', nullable: true, transformer: transformer.date })
+  phoneVerified!: string | null;
+
   @Column({ type: 'varchar', nullable: true })
   image!: string | null;
 
@@ -52,8 +58,12 @@ export class UserEntity {
   @OneToMany(() => AccountEntity, (account) => account.userId)
   accounts!: Relation<AccountEntity>[];
 
-  // @OneToMany(() => ProfileEntity, (profile) => profile.userId)
-  // profiles: Relation<ProfileEntity>[];
+  @OneToMany(() => ProfileEntity, (profile) => profile.userId)
+  profiles: Relation<ProfileEntity>[];
+
+  @ManyToMany(() => CityEntity)
+  @JoinTable()
+  adminForCities: Relation<CityEntity>[];
 }
 
 @Entity('AccountEntity', { name: 'accounts' })

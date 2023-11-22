@@ -22,5 +22,6 @@ import { ProfileEntity } from 'src/profile/profile.entity';
       ProfileEntity,
     ]),
   ],
+  exports: [NextAuthService],
 })
 export class NextAuthModule {}
