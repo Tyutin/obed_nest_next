@@ -14,6 +14,8 @@ import { CreateCategoryDto } from './dto/createCategory.dto';
 import { CategoryResponseInterface } from './types/categoryResponseInterface';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { AdminOrSecretGuard } from 'src/next-auth/guards/adminOrSecret.guard';
+import { City } from 'src/city/decorators/city.decorator';
+import { CityEntity } from 'src/city/city.entity';
 
 @Controller()
 export class CategoryController {
@@ -26,9 +28,12 @@ export class CategoryController {
   @UseGuards(AdminOrSecretGuard)
   async createCategory(
     @Body('category') createCategoryDto: CreateCategoryDto,
+    @City() city: CityEntity,
   ): Promise<CategoryResponseInterface> {
-    const category =
-      await this.categoryService.createCategory(createCategoryDto);
+    const category = await this.categoryService.createCategory(
+      createCategoryDto,
+      city,
+    );
     return this.categoryService.buildCategoryResponse(category);
   }
 

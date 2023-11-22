@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryDto } from './dto/createCategory.dto';
@@ -24,33 +24,33 @@ export class CategoryService {
 
   async createCategory(
     createCategoryDto: CreateCategoryDto,
+    cityFromDecorator?: CityEntity,
   ): Promise<CategoryEntity> {
-    const category = new CategoryEntity();
-    Object.assign(category, createCategoryDto);
+    const { title, cityId } = createCategoryDto;
 
-    const isExistingBySlug = await this.checkIsExistingBySlug(
-      category.title,
-      createCategoryDto.cityId,
-    );
-    if (isExistingBySlug) {
-      throw new HttpException(
-        'Ошибка! Категория с таким названием или короткой ссылкой уже существует',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
-    const city = await this.cityRepository.findOneBy({
-      id: createCategoryDto.cityId,
-    });
+    const city =
+      cityFromDecorator ??
+      (await this.cityRepository.findOneBy({
+        id: Equal(cityId),
+      }));
     if (!city) {
       throw new HttpException(
         'Ошибка! Выбранный город для категории не сущестувет',
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    category.city = city;
-    const { slugEn, slugRu } = getSlugs(category.title);
-    category.slugEn = slugEn;
-    category.slugRu = slugRu;
+
+    const isExistingBySlug = await this.checkIsExistingBySlug(title, city);
+    if (isExistingBySlug) {
+      throw new HttpException(
+        'Ошибка! Категория с таким названием или короткой ссылкой уже существует',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const { slugEn, slugRu } = getSlugs(title);
+    const category = new CategoryEntity();
+    Object.assign(category, { title, city, slugEn, slugRu });
     return await this.categoryRepository.save(category);
   }
 
@@ -73,7 +73,7 @@ export class CategoryService {
     ) {
       const isExistingBySlug = await this.checkIsExistingBySlug(
         updateCategoryDto.title,
-        oldCategory.city.id,
+        oldCategory.city,
       );
       if (isExistingBySlug) {
         throw new HttpException(
@@ -111,28 +111,12 @@ export class CategoryService {
     return category;
   }
 
-  async checkIsExistingBySlug(
-    checkingSlug: string,
-    cityId: number,
-  ): Promise<boolean> {
-    const { slugEn, slugRu } = getSlugs(checkingSlug);
-    const alreadyExistingBySlug = await this.categoryRepository.findOne({
-      where: [
-        {
-          slugEn,
-          city: {
-            id: cityId,
-          },
-        },
-        {
-          slugRu,
-          city: {
-            id: cityId,
-          },
-        },
-      ],
-    });
-    return !!alreadyExistingBySlug;
+  checkIsExistingBySlug(title: string, city: CityEntity): boolean {
+    const { slugEn, slugRu } = getSlugs(title);
+    const existingIndex = city.categories.findIndex(
+      (category) => category.slugEn === slugEn || category.slugRu === slugRu,
+    );
+    return existingIndex !== -1;
   }
 
   buildCategoryResponse(category: CategoryEntity): CategoryResponseInterface {
