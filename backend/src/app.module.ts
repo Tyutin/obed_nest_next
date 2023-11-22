@@ -13,6 +13,7 @@ import { AuthSecretMiddleware } from './next-auth/middlewares/authSecret.middlew
 import { ConfigModule } from '@nestjs/config';
 import { CityMiddleware } from './city/middlewares/city.middleware';
 import { UserMiddleware } from './next-auth/middlewares/user.middleware';
+import { IsAdminOfCityMiddleware } from './next-auth/middlewares/isAdminOfCity.middleware';
 
 @Module({
   imports: [
@@ -30,17 +31,16 @@ import { UserMiddleware } from './next-auth/middlewares/user.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthSecretMiddleware).forRoutes({
-      path: '*',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(CityMiddleware).forRoutes({
-      path: '*',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(UserMiddleware).forRoutes({
-      path: '*',
-      method: RequestMethod.ALL,
-    });
+    consumer
+      .apply(
+        AuthSecretMiddleware,
+        CityMiddleware,
+        UserMiddleware,
+        IsAdminOfCityMiddleware,
+      )
+      .forRoutes({
+        path: '*',
+        method: RequestMethod.ALL,
+      });
   }
 }

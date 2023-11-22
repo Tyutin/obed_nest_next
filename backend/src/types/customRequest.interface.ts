@@ -8,4 +8,5 @@ export interface CustomRequestInterface extends Request {
   city?: CityEntity;
   profile?: ProfileEntity;
   authBySecret?: boolean;
+  isAdminOfCity?: boolean;
 }
