@@ -5,8 +5,12 @@ import {
   ManyToOne,
   OneToMany,
   ValueTransformer,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
+import { ProfileEntity } from '../profile/profile.entity';
+import { CityEntity } from '../city/city.entity';
 
 const transformer: Record<'date' | 'bigint', ValueTransformer> = {
   date: {
@@ -27,6 +31,12 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true })
   name!: string | null;
 
+  @Column({ type: 'varchar', nullable: true })
+  firstName!: string | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  lastName!: string | null;
+
   @Column({ type: 'varchar', nullable: true, unique: true })
   email!: string | null;
 
@@ -34,16 +44,26 @@ export class UserEntity {
   emailVerified!: string | null;
 
   @Column({ type: 'varchar', nullable: true })
-  image!: string | null;
+  phone!: string | null;
+
+  @Column({ type: 'varchar', nullable: true, transformer: transformer.date })
+  phoneVerified!: string | null;
 
   @Column({ type: 'varchar', nullable: true })
-  role!: string | null;
+  image!: string | null;
 
   @OneToMany(() => SessionEntity, (session) => session.userId)
   sessions!: Relation<SessionEntity>[];
 
   @OneToMany(() => AccountEntity, (account) => account.userId)
   accounts!: Relation<AccountEntity>[];
+
+  @OneToMany(() => ProfileEntity, (profile) => profile.userId)
+  profiles: Relation<ProfileEntity>[];
+
+  @ManyToMany(() => CityEntity, { eager: true })
+  @JoinTable()
+  adminForCities: Relation<CityEntity>[];
 }
 
 @Entity('AccountEntity', { name: 'accounts' })

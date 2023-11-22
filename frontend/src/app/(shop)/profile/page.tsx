@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import './ProfilePage.scss';
 import SignOutButton from './SignOutButton/SignOutButton';
-import { authOptions } from '../api/auth/[...nextauth]/handler';
+import { authOptions } from '../../api/auth/[...nextauth]/handler';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);

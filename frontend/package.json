@@ -4,13 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:local": "DB_HOST=localhost BACKEND_API_HOST=http://localhost:3001 yarn dev",
+    "dev:local": "DB_HOST=localhost BACKEND_API_HOST=http://localhost:3001 yarn dev -p 80",
     "build": "DB_HOST=localhost BACKEND_API_HOST=http://localhost:3001 next build",
-    "start": "DB_HOST=localhost BACKEND_API_HOST=http://localhost:3001 next start",
+    "start": "DB_HOST=localhost BACKEND_API_HOST=http://localhost:3001 next start -p 80",
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/typeorm-adapter": "^1.0.7",
     "@types/js-cookie": "^3.0.5",
     "@types/react-slick": "^0.23.10",
     "classnames": "^2.3.2",

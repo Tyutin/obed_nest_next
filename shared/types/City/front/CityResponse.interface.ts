@@ -1,5 +1,6 @@
 import { CityEntityInterface } from "./CityEntity.interface";
 
 export interface CityResponseInterface {
-  city: CityEntityInterface
+  city: CityEntityInterface;
+  isAdminOrSecret: boolean;
 }

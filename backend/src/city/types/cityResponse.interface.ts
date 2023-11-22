@@ -1,5 +1,6 @@
 import { CityEntity } from '../city.entity';
 
 export interface CityResponseInterface {
-  city: CityEntity;
+  city: Omit<CityEntity, 'setCity'>;
+  isAdminOrSecret: boolean;
 }

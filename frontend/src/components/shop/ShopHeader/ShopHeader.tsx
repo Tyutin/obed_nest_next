@@ -9,26 +9,27 @@ import { CityEntityInterface } from '../../../../../shared/types/City/front/City
 import { CompanyLogo } from './components/CompanyLogo/CompanyLogo';
 import { getLinks } from './helpers/links';
 import { HeaderToggle } from './components/HeaderToggle/HeaderToggle';
+import { Session } from 'next-auth';
 
 interface ShopHeaderProps {
   city: CityEntityInterface;
+  session: Session | null;
+  isAdmin: boolean;
 }
 
 export default function ShopHeader(props: ShopHeaderProps) {
-  const { city } = props;
-  const {
-    companyName,
-    phones,
-    vkLink,
-    telegramLink,
-    instagramLink,
-    categories,
-  } = city;
+  const { city, session, isAdmin } = props;
+  const { vkLink, telegramLink, instagramLink, categories } = city;
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const links = getLinks(city, () => setMenuIsOpen(false));
 
   return (
     <header className="shop-header">
+      {isAdmin && (
+        <div className="shop-header__admin">
+          <Link href={'/admin'}>Панель администратора</Link>
+        </div>
+      )}
       <div className="shop-header__top">
         <div className="shop-header__company">
           <CompanyLogo className="shop-header_visible_tablet" />
@@ -43,7 +44,7 @@ export default function ShopHeader(props: ShopHeaderProps) {
           </div>
         </div>
         <div className="shop-header__controlls">
-          <AuthControl />
+          <AuthControl session={session} />
           <div className="shop-header_visible_tablet">
             <CartControl />
           </div>

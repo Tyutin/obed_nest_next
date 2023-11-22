@@ -1,9 +1,14 @@
-import { getCity } from '@fetch/city/getCity';
+import { fetchData } from '@fetch/fetchData';
 import './ShopCategories.scss';
 import ShopCategory from '@shopComponents/ShopCategory/ShopCategory';
+import { redirect } from 'next/navigation';
 
 export default async function ShopCategories() {
-  const categories = (await getCity()).city.categories;
+  const cityResponse = await fetchData.city.getCurrent();
+  if (!cityResponse) {
+    redirect('http://demo.obedaet-test.ru');
+  }
+  const categories = cityResponse.city.categories;
 
   return (
     <ul className="shop-categories">

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
@@ -7,7 +7,13 @@ import { GenerateModule } from './generate/generate.module';
 import { CategoryModule } from './category/category.module';
 import { CityModule } from './city/city.module';
 import { ProfileModule } from './profile/profile.module';
+import { NextAuthModule } from './next-auth/next-auth.module';
 import postgresConfig from '../dataSource/dataSource.config';
+import { AuthSecretMiddleware } from './next-auth/middlewares/authSecret.middleware';
+import { ConfigModule } from '@nestjs/config';
+import { CityMiddleware } from './city/middlewares/city.middleware';
+import { UserMiddleware } from './next-auth/middlewares/user.middleware';
+import { IsAdminOfCityMiddleware } from './next-auth/middlewares/isAdminOfCity.middleware';
 
 @Module({
   imports: [
@@ -17,8 +23,24 @@ import postgresConfig from '../dataSource/dataSource.config';
     CategoryModule,
     CityModule,
     ProfileModule,
+    NextAuthModule,
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        AuthSecretMiddleware,
+        CityMiddleware,
+        UserMiddleware,
+        IsAdminOfCityMiddleware,
+      )
+      .forRoutes({
+        path: '*',
+        method: RequestMethod.ALL,
+      });
+  }
+}

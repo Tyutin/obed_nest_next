@@ -28,24 +28,23 @@ export class ProductService {
     const product = new ProductEntity();
     Object.assign(product, createProductDto);
 
-    const isExistingBySlug = await this.checkIsExistingBySlug(
-      product.title,
-      createProductDto.categoryId,
-    );
-
-    if (isExistingBySlug) {
-      throw new HttpException(
-        'Ошибка! Товар с таким названием или короткой ссылкой уже существует',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
-
     const category = await this.categoryRepository.findOneBy({
       id: createProductDto.categoryId,
     });
     if (!category) {
       throw new HttpException(
         'Ошибка! Выбранная для товара категория не существует',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const isExistingBySlug = await this.checkIsExistingBySlug(
+      product.title,
+      category,
+    );
+    if (isExistingBySlug) {
+      throw new HttpException(
+        'Ошибка! Товар с таким названием или короткой ссылкой уже существует',
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
@@ -80,10 +79,10 @@ export class ProductService {
       throw new NotFoundException();
     }
 
-    if (updateProductDto.title) {
+    if (updateProductDto.title && updateProductDto.title !== oldProduct.title) {
       const isExistingBySlug = await this.checkIsExistingBySlug(
         updateProductDto.title,
-        oldProduct.category.id,
+        oldProduct.category,
       );
       if (isExistingBySlug && oldProduct.title !== updateProductDto.title) {
         throw new HttpException(
@@ -124,27 +123,11 @@ export class ProductService {
     };
   }
 
-  async checkIsExistingBySlug(
-    checkingSlug: string,
-    categoryId: number,
-  ): Promise<boolean> {
-    const { slugEn, slugRu } = getSlugs(checkingSlug);
-    const alreadyExistingBySlug = await this.productRepository.findOne({
-      where: [
-        {
-          slugEn,
-          category: {
-            id: categoryId,
-          },
-        },
-        {
-          slugRu,
-          category: {
-            id: categoryId,
-          },
-        },
-      ],
-    });
-    return !!alreadyExistingBySlug;
+  checkIsExistingBySlug(title: string, category: CategoryEntity): boolean {
+    const { slugEn, slugRu } = getSlugs(title);
+    const existingIndex = category.products.findIndex(
+      (product) => product.slugEn === slugEn || product.slugRu === slugRu,
+    );
+    return existingIndex !== -1;
   }
 }

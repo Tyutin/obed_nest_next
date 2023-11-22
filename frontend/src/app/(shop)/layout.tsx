@@ -3,15 +3,14 @@ import { Montserrat } from 'next/font/google';
 import '@assets/styles/global.scss';
 import './ShopLayout.scss';
 import ShopHeader from '@shopComponents/ShopHeader/ShopHeader';
-import ShopFooter from '@shopComponents/ShopFooter/ShopFooter';
 import ScrollToTopButton from '@shopComponents/ScrollToTopButton/ScrollToTopButton';
 import CartStrip from '@shopComponents/CartStrip/CartStrip';
 import ZustangState from '@shopComponents/ZustangState/ZustangState';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth';
-import SessionProvider from '@commonComponents/SessionProvider/SessionProvider';
-import { getCity } from '@fetch/city/getCity';
-import { authOptions } from './api/auth/[...nextauth]/handler';
+import { authOptions } from '../api/auth/[...nextauth]/handler';
+import { redirect } from 'next/navigation';
+import { fetchData } from '@fetch/fetchData';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -25,26 +24,27 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const city = (await getCity()).city;
-
+  const cityResponse = await fetchData.city.getCurrent();
+  if (!cityResponse) {
+    redirect('http://demo.obedaet-test.ru');
+  }
+  const city = cityResponse.city;
   const session = await getServerSession(authOptions);
+
   return (
-    <html lang="en">
+    <html lang="ru">
       <ZustangState
         products={city.products}
         cartCookie={cookies().get('obed_cart')?.value || ''}
       />
       <body className={montserrat.className}>
         <div className="shop-layout">
-          <SessionProvider
+          <ShopHeader
             session={session}
-            baseUrl="http://localhost:3000"
-            basePath="/api/auth"
-          >
-            <ShopHeader city={city} />
-          </SessionProvider>
+            city={city}
+            isAdmin={cityResponse.isAdminOrSecret}
+          />
           <main className="shop-layout__page">{children}</main>
-          {/* <ShopFooter /> */}
         </div>
         <ScrollToTopButton />
         <CartStrip />

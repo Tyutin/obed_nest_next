@@ -8,11 +8,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { WorkHoursInterface, defaultWorkHours } from './types/workHours';
-import {
-  DeliveryZoneInterface,
-  defaultDeliveryZones,
-} from './types/deliveryZone';
+import type { Relation } from 'typeorm';
+import type { WorkHoursInterface } from './types/workHours';
+import { defaultWorkHours } from './types/workHours';
+import { defaultDeliveryZones } from './types/deliveryZone';
+import type { DeliveryZoneInterface } from './types/deliveryZone';
 import { getSlugs } from '../../tools/getSlugs';
 import { CityEntityInterface } from './types/cityEntity.interface';
 
@@ -81,13 +81,13 @@ export class CityEntity implements CityEntityInterface {
   shippingZoneMapLink: string;
 
   @OneToMany(() => CategoryEntity, (category) => category.city, { eager: true })
-  categories: CategoryEntity[];
+  categories: Relation<CategoryEntity>[];
 
   @OneToMany(() => ProductEntity, (product) => product.city, { eager: true })
-  products: ProductEntity[];
+  products: Relation<ProductEntity>[];
 
   @OneToMany(() => ProfileEntity, (product) => product.city, { eager: true })
-  profiles: ProfileEntity[];
+  profiles: Relation<ProfileEntity>[];
 
   @BeforeInsert()
   setCity() {
