@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
 
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import './AuthControl.scss';
+import { Session } from 'next-auth';
 
-export default function AuthControl() {
-  const { data: session } = useSession();
+export default function AuthControl(props: { session: Session | null }) {
+  const { session } = props;
   if (!session) {
     return <button onClick={() => signIn('vk')}>Авторизация</button>;
   }

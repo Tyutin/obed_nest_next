@@ -84,9 +84,22 @@ export class CityService {
     return city;
   }
 
-  buildCityResponse(city: CityEntity): CityResponseInterface {
+  buildCityResponse(
+    city: CityEntity,
+    isAdminOrSecret: boolean,
+  ): CityResponseInterface {
+    if (isAdminOrSecret) {
+      return {
+        city,
+        isAdminOrSecret,
+      };
+    }
+    delete city.profiles;
+    delete city.createdAt;
+    delete city.nextPayment;
     return {
       city,
+      isAdminOrSecret,
     };
   }
 }
