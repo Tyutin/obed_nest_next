@@ -6,6 +6,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/handler';
 import { redirect } from 'next/navigation';
 import { fetchData } from '@fetch/fetchData';
+import StyledComponentsRegistry from '@commonComponents/StyledComponentsRegistry';
+import { Layout } from 'antd';
+import Content from '@adminComponents/Antd/Content';
+import AntdSider from '@adminComponents/Antd/Sider';
+import AdminMenu from '@adminComponents/Antd/AdminMenu';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -32,9 +37,21 @@ export default async function RootLayout({
   return (
     <html lang="ru">
       <body className={montserrat.className}>
-        <div className="admin-layout">
-          <main className="admin-layout__page">{children}</main>
-        </div>
+        <StyledComponentsRegistry>
+          <Layout>
+            <AntdSider breakpoint="lg" collapsedWidth="0">
+              <div className="demo-logo-vertical" />
+              <AdminMenu city={city} />
+            </AntdSider>
+            <Layout>
+              <Content>
+                <div className="admin-layout">
+                  <main className="admin-layout__page">{children}</main>
+                </div>
+              </Content>
+            </Layout>
+          </Layout>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

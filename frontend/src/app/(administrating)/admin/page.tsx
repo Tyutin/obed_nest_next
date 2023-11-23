@@ -1,5 +1,5 @@
+import './AboutPage.scss';
+
 export default function AdminPage() {
-  return (
-    <div className="shop-page">{/* <PromotionSlider /> */} admin page</div>
-  );
+  return <div className="about-page">admin page</div>;
 }

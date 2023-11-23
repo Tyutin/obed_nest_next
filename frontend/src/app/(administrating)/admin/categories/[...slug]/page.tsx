@@ -1,6 +1,6 @@
+import AdminCategoryPage from './pages/AdminCategoryPage/AdminCategoryPage';
+import AdminProductPage from './pages/AdminProductPage/AdminProductPage';
 import { fetchData } from '@fetch/fetchData';
-import ShopCategoryPage from './pages/ShopCategoryPage/ShopCategoryPage';
-import ShopProductPage from './pages/ShopProductPage/ShopProductPage';
 import { redirect } from 'next/navigation';
 
 export default async function CategoryPage({
@@ -35,8 +35,8 @@ export default async function CategoryPage({
     if (!product) {
       redirect('/');
     }
-    return <ShopProductPage category={category} product={product} />;
+    return <AdminProductPage category={category} product={product} />;
   } else {
-    return <ShopCategoryPage category={category} />;
+    return <AdminCategoryPage category={category} />;
   }
 }

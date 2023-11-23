@@ -1,6 +1,6 @@
 import ShopItem from '@shopComponents/ShopItem/ShopItem';
 import ShopShareButton from '@shopComponents/ShopShareButton/ShopShareButton';
-import { CategoryEntityInterface } from '../../../../../../shared/types/Category/front/CategoryEntity.interface';
+import { CategoryEntityInterface } from '../../../../../../../shared/types/Category/front/CategoryEntity.interface';
 import './ShopCategoryPage.scss';
 
 export default async function ShopCategoryPage(props: {

@@ -1,7 +1,7 @@
 import ShopItem from '@shopComponents/ShopItem/ShopItem';
 import ShopShareButton from '@shopComponents/ShopShareButton/ShopShareButton';
-import { CategoryEntityInterface } from '../../../../../../shared/types/Category/front/CategoryEntity.interface';
-import { ProductEntityInterface } from '../../../../../../shared/types/Product/front/ProductEntity.interface';
+import { CategoryEntityInterface } from '../../../../../../../shared/types/Category/front/CategoryEntity.interface';
+import { ProductEntityInterface } from '../../../../../../../shared/types/Product/front/ProductEntity.interface';
 import './ShopProductPage.scss';
 import Link from 'next/link';
 import Image from 'next/image';
