@@ -72,8 +72,13 @@ export class ProductService {
   async updateProduct(
     updateProductDto: UpdateProductDto,
   ): Promise<ProductEntity> {
-    const oldProduct = await this.productRepository.findOneBy({
-      id: updateProductDto.id,
+    const oldProduct = await this.productRepository.findOne({
+      where: {
+        id: updateProductDto.id,
+      },
+      relations: {
+        category: true,
+      },
     });
     if (!oldProduct) {
       throw new NotFoundException();

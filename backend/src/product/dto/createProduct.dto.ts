@@ -7,16 +7,17 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import { CreateProductDtoInterface } from '../../../../shared/types/Product/CreateProductDto.interface';
 
-export class CreateProductDto {
+export class CreateProductDto implements CreateProductDtoInterface {
   @IsString()
   @IsNotEmpty()
   title: string;
 
   @IsInt()
   @IsNotEmpty()
-  @Min(1)
-  @Max(10000000)
+  @Min(0)
+  @Max(1000000)
   price: number;
 
   @IsString()
@@ -24,7 +25,7 @@ export class CreateProductDto {
   image: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   description: string;
 
   @IsInt()
@@ -38,5 +39,6 @@ export class CreateProductDto {
 
   @IsInt()
   @Min(1)
+  @IsNotEmpty()
   categoryId: number;
 }

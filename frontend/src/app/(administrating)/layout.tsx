@@ -32,14 +32,17 @@ export default async function RootLayout({
     redirect('/');
   }
   const city = cityResponse.city;
-  const session = await getServerSession(authOptions);
 
   return (
     <html lang="ru">
       <body className={montserrat.className}>
         <StyledComponentsRegistry>
           <Layout>
-            <AntdSider breakpoint="lg" collapsedWidth="0">
+            <AntdSider
+              breakpoint="md"
+              collapsedWidth="0"
+              zeroWidthTriggerStyle={{ top: '0' }}
+            >
               <div className="demo-logo-vertical" />
               <AdminMenu city={city} />
             </AntdSider>

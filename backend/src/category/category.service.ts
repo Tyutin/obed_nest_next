@@ -57,8 +57,13 @@ export class CategoryService {
   async updateCategory(
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<CategoryEntity> {
-    const oldCategory = await this.categoryRepository.findOneBy({
-      id: updateCategoryDto.id,
+    const oldCategory = await this.categoryRepository.findOne({
+      where: {
+        id: updateCategoryDto.id,
+      },
+      relations: {
+        city: true,
+      },
     });
     if (!oldCategory) {
       throw new HttpException(

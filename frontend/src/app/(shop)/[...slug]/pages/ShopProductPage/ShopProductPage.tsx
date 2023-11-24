@@ -69,7 +69,7 @@ export default async function ShopProductPage(props: {
             {product.description}
           </div>
           <div className="product-page__info-block">
-            <span className="product-page__info-name">Вес/Объем</span>
+            <span className="product-page__info-name">Вес(гр) / Объем(мл)</span>
             {product.weight}
           </div>
           <div className="product-page__info-block">

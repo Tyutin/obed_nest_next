@@ -8,8 +8,9 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import { UpdateProductDtoInterface } from '../../../../shared/types/Product/UpdateProductDto.interface';
 
-export class UpdateProductDto {
+export class UpdateProductDto implements UpdateProductDtoInterface {
   @IsInt()
   @IsNotEmpty()
   id: number;
@@ -20,8 +21,8 @@ export class UpdateProductDto {
 
   @IsInt()
   @IsOptional()
-  @Min(1)
-  @Max(10000000)
+  @Min(0)
+  @Max(1000000)
   price: number;
 
   @IsString()
