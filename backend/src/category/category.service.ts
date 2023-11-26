@@ -127,6 +127,10 @@ export class CategoryService {
   }
 
   buildCategoryResponse(category: CategoryEntity): CategoryResponseInterface {
+    delete category.city;
+    if (!category.products) {
+      category.products = [];
+    }
     return {
       category,
     };

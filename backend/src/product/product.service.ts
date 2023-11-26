@@ -123,6 +123,8 @@ export class ProductService {
   }
 
   buildProductResponse(product: ProductEntity): ProductResponseInterface {
+    delete product.category;
+    delete product.city;
     return {
       product,
     };

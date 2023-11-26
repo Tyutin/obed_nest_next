@@ -87,8 +87,6 @@ export const authOptions: AuthOptions = {
       },
       profile(result: VkProfile) {
         const profile = result.response?.[0] ?? {}
-        // console.log('PROFILE')
-        // console.log(profile)
         return {
           id: profile.id.toString(),
           name: [profile.first_name, profile.last_name].filter(Boolean).join(' '),
@@ -106,29 +104,11 @@ export const authOptions: AuthOptions = {
       if (account &&  account.email) {
         user.email = account?.email.toString() || ''
       }
-      // console.log('signInStart')
-      // console.log(user)
-      // console.log(account)
-      // console.log(profile)
-      // console.log(email)
-      // console.log(credentials)
-      // console.log('signInEnd')
       return true
     },
     async redirect({ url }) {      
       return url
     },
-    // async session({ session, user, token }) {
-    //   console.log('sessionStart')
-    //   console.log(session)
-    //   console.log(user)
-    //   console.log(token)
-    //   console.log('sessionEnd')
-    //   return session
-    // },
-    // async jwt({ token, user, account, profile, isNewUser }) {
-    //   return token
-    // }
   }
 }
 
