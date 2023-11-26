@@ -1,39 +1,95 @@
 'use client';
-import { Button, Checkbox, Form, Input, InputNumber } from 'antd';
+import { Alert, Button, Checkbox, Form, Input, InputNumber } from 'antd';
 import { ProductEntityInterface } from '../../../../../../../../../shared/types/Product/front/ProductEntity.interface';
 import { createProductAction, updateProductAction } from '../../actions';
 import { UpdateProductDtoInterface } from '../../../../../../../../../shared/types/Product/UpdateProductDto.interface';
 import { CategoryEntityInterface } from '../../../../../../../../../shared/types/Category/front/CategoryEntity.interface';
 import { CreateProductDtoInterface } from '../../../../../../../../../shared/types/Product/CreateProductDto.interface';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCityStore } from '@store/city/useCityStore';
 
 export default function ProductForm(props: {
+  category: CategoryEntityInterface;
   product?: ProductEntityInterface;
   formName?: string;
-  category: CategoryEntityInterface;
 }) {
   const { product, formName, category } = props;
+  const router = useRouter();
+
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [error, setError] = useState<Error>();
+  const [successUpdateMessage, setSuccessUpdateMessage] = useState<string>();
+
+  const storeAddProduct = useCityStore((state) => state.storeAddProduct);
+  const storeUpdateProduct = useCityStore((state) => state.storeUpdateProduct);
+
+  async function createProduct(dto: CreateProductDtoInterface) {
+    setIsFetching(true);
+    const productResponse = await createProductAction(dto);
+    setIsFetching(false);
+    if (!productResponse.product) {
+      setError(productResponse);
+    } else {
+      storeAddProduct(category.id, productResponse.product);
+      router.push(
+        `/admin/categories/${category.slugEn}/${productResponse.product.slugEn}`
+      );
+    }
+  }
+
+  async function updateProduct(dto: UpdateProductDtoInterface) {
+    setIsFetching(true);
+    const productResponse = await updateProductAction(dto);
+    setIsFetching(false);
+    if (!productResponse.product) {
+      setError(productResponse);
+      return;
+    }
+    storeUpdateProduct(category.id, productResponse.product);
+    if (!!product && productResponse.product.slugEn !== product.slugEn) {
+      router.push(
+        `/admin/categories/${category.slugEn}/${productResponse.product.slugEn}`
+      );
+    } else {
+      setSuccessUpdateMessage('Товар успешно обновлен!');
+    }
+  }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  const onFinish2 = (
+  const onFinish = (
     dto: UpdateProductDtoInterface & CreateProductDtoInterface
   ) =>
     dto.id
-      ? updateProductAction(dto)
-      : createProductAction({ ...dto, categoryId: category.id });
+      ? updateProduct(dto)
+      : createProduct({ ...dto, categoryId: category.id });
 
   return (
     <Form
       name={formName || 'product'}
       size="large"
       initialValues={{ remember: true }}
-      onFinish={onFinish2}
+      onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       layout="vertical"
+      disabled={isFetching}
+      onValuesChange={(_values) => setSuccessUpdateMessage('')}
     >
+      {error && (
+        <Alert
+          message={error.message}
+          description={JSON.stringify(error, null, 2)}
+          type="error"
+          showIcon={true}
+        />
+      )}
+      {successUpdateMessage && (
+        <Alert message={successUpdateMessage} type="success" showIcon={true} />
+      )}
       <Form.Item name="id" initialValue={product?.id} hidden={true}>
         <InputNumber hidden={true} name="id" />
       </Form.Item>

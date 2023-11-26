@@ -5,6 +5,9 @@ import { sharedHeaders } from '../../../shared/constants/shared-headers';
 import { ProductResponseInterface } from '../../../backend/src/product/types/productResponseInterface';
 import { UpdateProductDtoInterface } from '../../../shared/types/Product/UpdateProductDto.interface';
 import { CreateProductDtoInterface } from '../../../shared/types/Product/CreateProductDto.interface';
+import { UpdateCategoryDtoInterface } from '@shared/types/Category/UpdateCategoryDto.interface';
+import { CategoryResponseInterface } from '@shared/types/Category/front/CategoryResponse.interface';
+import { CreateCategoryDtoInterface } from '@shared/types/Category/CreateCategoryDto.interface';
 
 export const BACKEND_API_HOST = process.env.BACKEND_API_HOST || 'http://nestjs:3001' 
 
@@ -37,29 +40,35 @@ export const fetchData = {
     }
   },
   product: {
-    updateProduct: async(updateProductDto: UpdateProductDtoInterface):Promise<ProductResponseInterface | null> => {
+    updateProduct: async(updateProductDto: UpdateProductDtoInterface):Promise<ProductResponseInterface & Error> => {
       const data = {
         product: updateProductDto
       }
-      try {
-        const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'PUT'}, data)
-        return await response.json()
-      } catch (e) {
-        console.log(e)
-        return null
-      }
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'PUT'}, data)
+      return await response.json()
     },
-    createProduct: async(createProductDto: CreateProductDtoInterface):Promise<ProductResponseInterface | null> => {
+    createProduct: async(createProductDto: CreateProductDtoInterface):Promise<ProductResponseInterface & Error> => {
       const data = {
         product: createProductDto
       }
-      try {
-        const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'POST'}, data)
-        return await response.json()
-      } catch (e) {
-        console.log(e)
-        return null
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'POST'}, data)
+      return await response.json()
+    }
+  },
+  category: {
+    updateCategory: async(updateCategoryDto: UpdateCategoryDtoInterface): Promise<CategoryResponseInterface & Error> => {
+      const data = {
+        category: updateCategoryDto
       }
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/category`, method: 'PUT'}, data)
+      return await response.json()
+    },
+    createCategory: async(createCategoryDto: CreateCategoryDtoInterface): Promise<CategoryResponseInterface & Error> => {
+      const data = {
+        category: createCategoryDto
+      }
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/category`, method: 'POST'}, data)
+      return await response.json()
     }
   }
 }

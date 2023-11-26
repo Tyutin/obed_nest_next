@@ -9,8 +9,8 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { WorkHoursInterface } from '../types/workHours';
-import { DeliveryZoneInterface } from '../types/deliveryZone';
+import type { WorkHoursInterface } from '../../../../shared/types/City/extra/workHours/WorkHours.interface';
+import type { DeliveryZoneInterface } from '../../../../shared/types/City/extra/deliveryZone/DeliveryZone.interface';
 
 export class CreateCityDto {
   @IsDate()

@@ -6,20 +6,17 @@ import {
   DatabaseOutlined,
   PercentageOutlined,
   RollbackOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { CityEntityInterface } from '../../../../../shared/types/City/front/CityEntity.interface';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useCityStore } from '@store/city/useCityStore';
 
-interface AdminMenuProps {
-  city: CityEntityInterface;
-}
-
-export default function AdminMenu(props: AdminMenuProps) {
-  const { city } = props;
+export default function AdminMenu() {
+  const city = useCityStore((state) => state.city);
   const router = useRouter();
   const items = getMenuItems(city, router);
   return (
@@ -46,6 +43,14 @@ function getMenuItems(
         router.push(path);
       },
     };
+  });
+  categoriesMenuItems.unshift({
+    label: 'Новая категория',
+    key: 'new-category',
+    onClick: () => {
+      router.push('/admin/categories/new-category');
+    },
+    icon: <PlusCircleOutlined />,
   });
   const links: {
     text: string;

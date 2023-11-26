@@ -53,6 +53,7 @@ export class GenerateController {
     const category: CreateCategoryDto = {
       title: categoryName || 'Вторые блюда',
       cityId: cityId || 1,
+      published: true,
     };
     const newCategory = this.categoryService.createCategory(category);
     return newCategory;

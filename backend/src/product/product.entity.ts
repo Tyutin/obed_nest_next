@@ -36,7 +36,7 @@ export class ProductEntity implements ProductEntityInterface {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   endAvailableTime: Date;
 
-  @Column({ default: true })
+  @Column({ default: false })
   published: boolean;
 
   @ManyToOne(() => CategoryEntity, (category) => category.products)

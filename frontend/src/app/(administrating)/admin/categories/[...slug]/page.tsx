@@ -14,12 +14,15 @@ export default async function CategoryPage({
     redirect('/');
   }
 
-  const categorySlug = decodeURIComponent(slug[0]);
   const cityResponse = await fetchData.city.getCurrent();
   if (!cityResponse) {
     redirect('http://demo.obedaet-test.ru');
   }
 
+  const categorySlug = decodeURIComponent(slug[0]);
+  if (categorySlug === 'new' || categorySlug === 'new-category') {
+    return <AdminCategoryPage city={cityResponse.city} />;
+  }
   const category = cityResponse.city.categories.find(
     (cat) => cat.slugEn === categorySlug || cat.slugRu === categorySlug
   );
@@ -28,6 +31,9 @@ export default async function CategoryPage({
     redirect('/');
   }
   if (slug[1]) {
+    if (slug[1] === 'new' || slug[1] === 'new-product') {
+      return <AdminProductPage category={category} />;
+    }
     const productSlug = decodeURIComponent(slug[1]);
     const product = category.products.find(
       (prod) => prod.slugEn === productSlug || prod.slugRu === productSlug
@@ -37,6 +43,6 @@ export default async function CategoryPage({
     }
     return <AdminProductPage category={category} product={product} />;
   } else {
-    return <AdminCategoryPage category={category} />;
+    return <AdminCategoryPage city={cityResponse.city} category={category} />;
   }
 }

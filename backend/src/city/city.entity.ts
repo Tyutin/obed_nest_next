@@ -9,10 +9,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import type { WorkHoursInterface } from './types/workHours';
-import { defaultWorkHours } from './types/workHours';
-import { defaultDeliveryZones } from './types/deliveryZone';
-import type { DeliveryZoneInterface } from './types/deliveryZone';
+import type { WorkHoursInterface } from '../../../shared/types/City/extra/workHours/WorkHours.interface';
+import type { DeliveryZoneInterface } from '../../../shared/types/City/extra/deliveryZone/DeliveryZone.interface';
+import { defaultWorkHours } from '../../../shared/types/City/extra/workHours/defaultWorkHours';
+import { defaultDeliveryZones } from '../../../shared/types/City/extra/deliveryZone/defaultDeliveryZones';
 import { getSlugs } from '../../tools/getSlugs';
 import { CityEntityInterface } from './types/cityEntity.interface';
 

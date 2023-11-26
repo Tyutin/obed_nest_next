@@ -1,12 +1,4 @@
-type DeliveryCondition = {
-  cartCostFrom: number;
-  shippingCost: number;
-};
-
-export interface DeliveryZoneInterface {
-  name: string;
-  conditions: DeliveryCondition[];
-}
+import type { DeliveryZoneInterface } from './DeliveryZone.interface';
 
 export const defaultDeliveryZones: DeliveryZoneInterface[] = [
   {

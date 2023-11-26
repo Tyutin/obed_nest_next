@@ -18,7 +18,7 @@ export class CategoryEntity implements CategoryEntityInterface {
   @Column({ default: 'Город' })
   title: string;
 
-  @Column({ default: true })
+  @Column({ default: false })
   published: boolean;
 
   @Column({ default: 'gorod' })

@@ -1,11 +1,22 @@
-import { IsNotEmpty, IsString, IsInt } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsInt,
+  IsBoolean,
+  IsOptional,
+} from 'class-validator';
+import { UpdateCategoryDtoInterface } from '@shared/types/Category/UpdateCategoryDto.interface';
 
-export class UpdateCategoryDto {
+export class UpdateCategoryDto implements UpdateCategoryDtoInterface {
   @IsInt()
   @IsNotEmpty()
   id: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   title: string;
+
+  @IsBoolean()
+  @IsOptional()
+  published: boolean;
 }

@@ -24,12 +24,13 @@
       "@adminComponents/*": ["./src/components/admin/*"],
       "@assets/*": ["./src/assets/*"],
       "@fetch/*": ["./src/fetch/*"],
-      "@store/*": ["./src/store/*"]
+      "@store/*": ["./src/store/*"],
+      "@shared/*": ["../shared/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.ts", "../shared/**/*.ts"],
   "exclude": ["node_modules"]
 }

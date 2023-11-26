@@ -1,5 +1,3 @@
-import { ProductEntityInterface } from '../../../../shared/types/Product/front/ProductEntity.interface';
-
 export interface ProductInCart {
   id: number;
   count: number;

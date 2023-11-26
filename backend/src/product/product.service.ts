@@ -133,6 +133,6 @@ export class ProductService {
     const existingIndex = category.products.findIndex(
       (product) => product.slugEn === slugEn || product.slugRu === slugRu,
     );
-    return existingIndex !== -1;
+    return existingIndex !== -1 || slugEn === 'new' || slugEn === 'new-product';
   }
 }

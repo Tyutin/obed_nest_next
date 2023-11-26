@@ -121,7 +121,9 @@ export class CategoryService {
     const existingIndex = city.categories.findIndex(
       (category) => category.slugEn === slugEn || category.slugRu === slugRu,
     );
-    return existingIndex !== -1;
+    return (
+      existingIndex !== -1 || slugEn === 'new' || slugEn === 'new-category'
+    );
   }
 
   buildCategoryResponse(category: CategoryEntity): CategoryResponseInterface {

@@ -1,5 +1,5 @@
-import { WorkHoursInterface } from './extra/WorkHours.interface';
-import { DeliveryZoneInterface } from './extra/DeliveryZone.interface';
+import type { WorkHoursInterface } from './extra/workHours/WorkHours.interface';
+import type { DeliveryZoneInterface } from './extra/deliveryZone/DeliveryZone.interface';
 
 export interface CityRawInterface {
   id: number;
