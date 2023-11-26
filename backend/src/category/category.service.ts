@@ -27,7 +27,7 @@ export class CategoryService {
     createCategoryDto: CreateCategoryDto,
     cityFromDecorator?: CityEntity,
   ): Promise<CategoryEntity> {
-    const { title, cityId } = createCategoryDto;
+    const { title, cityId, published } = createCategoryDto;
 
     const city =
       cityFromDecorator ??
@@ -51,7 +51,7 @@ export class CategoryService {
 
     const { slugEn, slugRu } = getSlugs(title);
     const category = new CategoryEntity();
-    Object.assign(category, { title, city, slugEn, slugRu });
+    Object.assign(category, { title, city, published, slugEn, slugRu });
     return await this.categoryRepository.save(category);
   }
 

@@ -10,10 +10,31 @@
     padding: 15px;
   }
 
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin-bottom: 40px;
+  }
+
   &__title {
     font-size: 28px;
     font-weight: 600;
     color: #1C274C;
-    margin-bottom: 40px;
+
+    @media (max-width: 1023px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__product-item {
+    width: 100%;
+    border-radius: 15px;
   }
 }

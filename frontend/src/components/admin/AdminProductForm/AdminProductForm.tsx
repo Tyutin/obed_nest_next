@@ -100,7 +100,7 @@ export default function AdminProductForm(props: {
           checked={product?.published || false}
           name="published"
         >
-          Опубликован
+          {product ? 'Опубликован' : 'Опубликовать сразу'}
         </Checkbox>
       </Form.Item>
       <Form.Item

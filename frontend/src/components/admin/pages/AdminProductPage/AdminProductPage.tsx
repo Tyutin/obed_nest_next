@@ -39,7 +39,7 @@ export default function AdminProductPage(props: { slugs: string[] }) {
       <div className="product-page">
         <div className="product-page__heading">
           <Breadcrumb items={breadCrumbItems} />
-          <h1 className="product-page__title">Создание нового товара</h1>
+          <h1 className="product-page__title">{`Создание нового товара (Категория "${category.title}")`}</h1>
         </div>
         <AdminProductForm category={category} />
       </div>

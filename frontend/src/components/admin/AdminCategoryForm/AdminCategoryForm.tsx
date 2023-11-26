@@ -96,7 +96,7 @@ export default function AdminCategoryForm(props: {
           checked={category?.published || false}
           name="published"
         >
-          Опубликована
+          {category ? 'Опубликована' : 'Опубликовать сразу'}
         </Checkbox>
       </Form.Item>
       <Form.Item
