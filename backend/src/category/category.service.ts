@@ -12,6 +12,7 @@ import { getSlugs } from 'tools/getSlugs';
 import { CategoryResponseInterface } from './types/categoryResponseInterface';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { CityEntity } from 'src/city/city.entity';
+import { bannedSlugs } from 'src/constants';
 
 @Injectable()
 export class CategoryService {
@@ -122,7 +123,9 @@ export class CategoryService {
       (category) => category.slugEn === slugEn || category.slugRu === slugRu,
     );
     return (
-      existingIndex !== -1 || slugEn === 'new' || slugEn === 'new-category'
+      existingIndex !== -1 ||
+      bannedSlugs.includes(slugEn) ||
+      bannedSlugs.includes(slugRu)
     );
   }
 

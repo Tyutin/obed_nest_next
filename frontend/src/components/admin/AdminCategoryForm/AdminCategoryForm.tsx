@@ -1,7 +1,7 @@
 'use client';
 import { Alert, Button, Checkbox, Form, Input, InputNumber } from 'antd';
-import { createCategoryAction, updateCategoryAction } from '../../actions';
-import { CategoryEntityInterface } from '../../../../../../../../../shared/types/Category/front/CategoryEntity.interface';
+import { createCategoryAction, updateCategoryAction } from '@fetch/actions';
+import { CategoryEntityInterface } from '../../../../../shared/types/Category/front/CategoryEntity.interface';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CityEntityInterface } from '@shared/types/City/front/CityEntity.interface';
@@ -9,7 +9,7 @@ import { UpdateCategoryDtoInterface } from '@shared/types/Category/UpdateCategor
 import { CreateCategoryDtoInterface } from '@shared/types/Category/CreateCategoryDto.interface';
 import { useCityStore } from '@store/city/useCityStore';
 
-export default function CategoryForm(props: {
+export default function AdminCategoryForm(props: {
   city: CityEntityInterface;
   category?: CategoryEntityInterface;
   formName?: string;
@@ -47,8 +47,10 @@ export default function CategoryForm(props: {
       return;
     }
     storeUpdateCategory(categoryResponse.category);
-    if (!!category && categoryResponse.category.slugEn !== category.slugEn) {
-      router.push(`/admin/categories/${categoryResponse.category.slugEn}`);
+    if (category && categoryResponse.category.title !== category.title) {
+      setTimeout(() => {
+        router.push(`/admin/categories/${categoryResponse.category.slugEn}`);
+      }, 0);
     } else {
       setSuccessUpdateMessage('Категория успешно обновлена!');
     }

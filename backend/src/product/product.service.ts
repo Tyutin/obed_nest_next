@@ -12,6 +12,7 @@ import { ProductResponseInterface } from './types/productResponseInterface';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { getSlugs } from 'tools/getSlugs';
 import { CategoryEntity } from 'src/category/category.entity';
+import { bannedSlugs } from 'src/constants';
 
 @Injectable()
 export class ProductService {
@@ -135,6 +136,10 @@ export class ProductService {
     const existingIndex = category.products.findIndex(
       (product) => product.slugEn === slugEn || product.slugRu === slugRu,
     );
-    return existingIndex !== -1 || slugEn === 'new' || slugEn === 'new-product';
+    return (
+      existingIndex !== -1 ||
+      bannedSlugs.includes(slugEn) ||
+      bannedSlugs.includes(slugRu)
+    );
   }
 }

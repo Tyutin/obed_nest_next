@@ -1,15 +1,15 @@
 'use client';
 import { Alert, Button, Checkbox, Form, Input, InputNumber } from 'antd';
-import { ProductEntityInterface } from '../../../../../../../../../shared/types/Product/front/ProductEntity.interface';
-import { createProductAction, updateProductAction } from '../../actions';
-import { UpdateProductDtoInterface } from '../../../../../../../../../shared/types/Product/UpdateProductDto.interface';
-import { CategoryEntityInterface } from '../../../../../../../../../shared/types/Category/front/CategoryEntity.interface';
-import { CreateProductDtoInterface } from '../../../../../../../../../shared/types/Product/CreateProductDto.interface';
+import { ProductEntityInterface } from '../../../../../shared/types/Product/front/ProductEntity.interface';
+import { createProductAction, updateProductAction } from '@fetch/actions';
+import { UpdateProductDtoInterface } from '../../../../../shared/types/Product/UpdateProductDto.interface';
+import { CategoryEntityInterface } from '../../../../../shared/types/Category/front/CategoryEntity.interface';
+import { CreateProductDtoInterface } from '../../../../../shared/types/Product/CreateProductDto.interface';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCityStore } from '@store/city/useCityStore';
 
-export default function ProductForm(props: {
+export default function AdminProductForm(props: {
   category: CategoryEntityInterface;
   product?: ProductEntityInterface;
   formName?: string;
@@ -47,18 +47,16 @@ export default function ProductForm(props: {
       return;
     }
     storeUpdateProduct(category.id, productResponse.product);
-    if (!!product && productResponse.product.slugEn !== product.slugEn) {
-      router.push(
-        `/admin/categories/${category.slugEn}/${productResponse.product.slugEn}`
-      );
+    if (!!product && productResponse.product.title !== product.title) {
+      setTimeout(() => {
+        router.push(
+          `/admin/categories/${category.slugEn}/${productResponse.product.slugEn}`
+        );
+      }, 0);
     } else {
       setSuccessUpdateMessage('Товар успешно обновлен!');
     }
   }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
 
   const onFinish = (
     dto: UpdateProductDtoInterface & CreateProductDtoInterface
@@ -73,7 +71,6 @@ export default function ProductForm(props: {
       size="large"
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
       layout="vertical"
       disabled={isFetching}
