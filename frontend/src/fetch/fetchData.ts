@@ -8,6 +8,8 @@ import { CreateProductDtoInterface } from '../../../shared/types/Product/CreateP
 import { UpdateCategoryDtoInterface } from '@shared/types/Category/UpdateCategoryDto.interface';
 import { CategoryResponseInterface } from '@shared/types/Category/front/CategoryResponse.interface';
 import { CreateCategoryDtoInterface } from '@shared/types/Category/CreateCategoryDto.interface';
+import { DeleteProductDtoInterface } from '@shared/types/Product/DeleteProductDto.interface';
+import { DeleteCategoryDtoInterface } from '@shared/types/Category/DeleteCategoryDto.interface';
 
 export const BACKEND_API_HOST = process.env.BACKEND_API_HOST || 'http://nestjs:3001' 
 
@@ -53,6 +55,13 @@ export const fetchData = {
       }
       const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'POST'}, data)
       return await response.json()
+    },
+    deleteProduct: async(deleteProductDto: DeleteProductDtoInterface):Promise<CategoryResponseInterface & Error> => {
+      const data = {
+        product: deleteProductDto
+      }
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/product`, method: 'DELETE'}, data)
+      return await response.json()
     }
   },
   category: {
@@ -68,6 +77,13 @@ export const fetchData = {
         category: createCategoryDto
       }
       const response = await fetchBuilder({url: `${BACKEND_API_HOST}/category`, method: 'POST'}, data)
+      return await response.json()
+    },
+    deleteCategory: async(deleteCategoryDto: DeleteCategoryDtoInterface): Promise<CityResponseInterface & Error> => {
+      const data = {
+        category: deleteCategoryDto
+      }
+      const response = await fetchBuilder({url: `${BACKEND_API_HOST}/category`, method: 'DELETE'}, data)
       return await response.json()
     }
   }

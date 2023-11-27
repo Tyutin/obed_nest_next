@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Breadcrumb, { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
 
 import './AdminCategoryPage.scss';
+import AdminCategoryDelete from '@adminComponents/AdminCategoryDelete/AdminCategoryDelete';
 
 export default function AdminCategoryPage(props: { slug: string }) {
   const { slug } = props;
@@ -52,6 +53,7 @@ export default function AdminCategoryPage(props: { slug: string }) {
         <h1 className="category-page__title">{`Категория "${category.title}"`}</h1>
       </div>
       <Collapse
+        accordion={true}
         defaultActiveKey="edit-category"
         size="large"
         items={[
@@ -83,6 +85,11 @@ export default function AdminCategoryPage(props: { slug: string }) {
                 })}
               </ul>
             ),
+          },
+          {
+            label: 'Удаление категории',
+            key: 'delete',
+            children: <AdminCategoryDelete category={category} />,
           },
         ]}
       />

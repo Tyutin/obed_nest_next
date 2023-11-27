@@ -7,6 +7,7 @@ import {
   PercentageOutlined,
   RollbackOutlined,
   PlusCircleOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
@@ -44,14 +45,24 @@ function getMenuItems(
       },
     };
   });
-  categoriesMenuItems.unshift({
-    label: 'Новая категория',
-    key: 'new-category',
-    onClick: () => {
-      router.push('/admin/categories/new-category');
+  const defaultCategoriesMenuItems: ItemType[] = [
+    {
+      label: 'Все категории',
+      key: 'all-categories',
+      onClick: () => {
+        router.push('/admin/categories/');
+      },
+      icon: <UnorderedListOutlined />,
     },
-    icon: <PlusCircleOutlined />,
-  });
+    {
+      label: 'Новая категория',
+      key: 'new-category',
+      onClick: () => {
+        router.push('/admin/categories/new-category');
+      },
+      icon: <PlusCircleOutlined />,
+    },
+  ];
   const links: {
     text: string;
     href: string;
@@ -67,7 +78,7 @@ function getMenuItems(
       text: 'Категории',
       href: '/admin/categories',
       icon: <DatabaseOutlined />,
-      children: categoriesMenuItems,
+      children: [...defaultCategoriesMenuItems, ...categoriesMenuItems],
     },
     {
       text: 'Доставка',

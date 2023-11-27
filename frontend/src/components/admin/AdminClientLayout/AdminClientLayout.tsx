@@ -3,7 +3,7 @@
 import { Layout } from 'antd';
 import { useCityStore } from '@store/city/useCityStore';
 import { CityEntityInterface } from '@shared/types/City/front/CityEntity.interface';
-import AdminMenu from '@adminComponents/Antd/AdminMenu';
+import AdminMenu from '@adminComponents/AdminMenu/AdminMenu';
 
 const { Sider, Content } = Layout;
 

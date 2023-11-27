@@ -8,4 +8,5 @@ export type CityStore = {
   storeUpdateProduct: (categoryId: number, product: ProductEntityInterface) => void
   storeAddCategory: (category: CategoryEntityInterface) => void
   storeUpdateCategory: (category: CategoryEntityInterface) => void
+  storeDeleteProduct: (productIds: number[]) => void
 }

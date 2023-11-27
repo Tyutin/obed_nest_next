@@ -51,6 +51,9 @@ export const useCityStore = create<CityStore>()(
           if (!categoryInStore) return
           Object.assign(categoryInStore, category)
         }),
+        storeDeleteProduct: (productIds) => set((state) => {
+          state.city.products = state.city.products.filter(el => productIds.includes(el.id))
+        })
       })
     )
   )

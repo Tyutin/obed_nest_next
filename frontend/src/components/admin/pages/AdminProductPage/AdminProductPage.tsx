@@ -5,8 +5,10 @@ import { redirect } from 'next/navigation';
 import AdminProductForm from '@adminComponents/AdminProductForm/AdminProductForm';
 import Link from 'next/link';
 import Breadcrumb, { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
+import { Collapse } from 'antd';
 
 import './AdminProductPage.scss';
+import AdminProductDelete from '../../AdminProductDelete/AdminProductDelete';
 
 export default function AdminProductPage(props: { slugs: string[] }) {
   const { slugs } = props;
@@ -50,13 +52,31 @@ export default function AdminProductPage(props: { slugs: string[] }) {
   );
   if (!product) redirect('/admin');
   breadCrumbItems.push({ title: `Редактирование товара "${product.title}"` });
+
   return (
     <div className="product-page">
       <div className="product-page__heading">
         <Breadcrumb items={breadCrumbItems} />
         <div className="product-page__title">{product?.title}</div>
       </div>
-      <AdminProductForm category={category} product={product} />
+      <Collapse
+        defaultActiveKey="edit"
+        accordion={true}
+        items={[
+          {
+            label: 'Редактирование товара',
+            key: 'edit',
+            children: (
+              <AdminProductForm category={category} product={product} />
+            ),
+          },
+          {
+            label: 'Удаление товара',
+            key: 'delete',
+            children: <AdminProductDelete productId={product.id} />,
+          },
+        ]}
+      />
     </div>
   );
 }

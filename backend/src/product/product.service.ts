@@ -13,6 +13,7 @@ import { UpdateProductDto } from './dto/updateProduct.dto';
 import { getSlugs } from 'tools/getSlugs';
 import { CategoryEntity } from 'src/category/category.entity';
 import { bannedSlugs } from 'src/constants';
+import { DeleteProductDto } from './dto/deleteProduct.dto';
 
 @Injectable()
 export class ProductService {
@@ -107,6 +108,28 @@ export class ProductService {
     }
 
     return await this.productRepository.save(product);
+  }
+
+  async deleteProduct(
+    deleteProductDto: DeleteProductDto,
+  ): Promise<CategoryEntity> {
+    const product = await this.productRepository.findOne({
+      where: {
+        id: deleteProductDto.id,
+      },
+      relations: {
+        category: true,
+      },
+    });
+    if (!product) {
+      throw new HttpException(
+        'Ошибка! Товар не существует',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    const categoryId = product.category.id;
+    await this.productRepository.delete({ id: deleteProductDto.id });
+    return await this.categoryRepository.findOneBy({ id: categoryId });
   }
 
   async getProductBySlug(slug: string): Promise<ProductEntity> {

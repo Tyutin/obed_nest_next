@@ -13,6 +13,8 @@ import { CategoryResponseInterface } from './types/categoryResponseInterface';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { CityEntity } from 'src/city/city.entity';
 import { bannedSlugs } from 'src/constants';
+import { DeleteCategoryDto } from './dto/deleteCategory.dto';
+import { ProductEntity } from 'src/product/product.entity';
 
 @Injectable()
 export class CategoryService {
@@ -21,6 +23,8 @@ export class CategoryService {
     private readonly categoryRepository: Repository<CategoryEntity>,
     @InjectRepository(CityEntity)
     private readonly cityRepository: Repository<CityEntity>,
+    @InjectRepository(ProductEntity)
+    private readonly productRepository: Repository<ProductEntity>,
   ) {}
 
   async createCategory(
@@ -101,6 +105,39 @@ export class CategoryService {
     }
 
     return await this.categoryRepository.save(category);
+  }
+
+  async deleteCategory(
+    deleteCategoryDto: DeleteCategoryDto,
+  ): Promise<CityEntity> {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: deleteCategoryDto.id,
+      },
+      relations: {
+        city: true,
+      },
+    });
+    if (!category) {
+      throw new HttpException(
+        'Ошибка! Категория не существует',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    const deletePromises: Promise<void>[] = [];
+    category.products.forEach((product) => {
+      deletePromises.push(
+        new Promise<void>(async (res) => {
+          await this.productRepository.delete({ id: product.id });
+          res();
+        }),
+      );
+    });
+    await Promise.all(deletePromises);
+    const cityId = category.city.id;
+    await this.categoryRepository.delete({ id: deleteCategoryDto.id });
+    const city = this.cityRepository.findOneBy({ id: cityId });
+    return city;
   }
 
   async getCategoryBySlug(slug: string): Promise<CategoryEntity> {
